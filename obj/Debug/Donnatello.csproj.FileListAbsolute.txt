@@ -1,0 +1,10 @@
+C:\Users\sligh\source\repos\Donnatello\Donnatello\bin\Debug\Donnatello.exe.config
+C:\Users\sligh\source\repos\Donnatello\Donnatello\bin\Debug\Donnatello.exe
+C:\Users\sligh\source\repos\Donnatello\Donnatello\bin\Debug\Donnatello.pdb
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.Properties.Resources.resources
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.csproj.GenerateResource.cache
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.csproj.CoreCompileInputs.cache
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.exe
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.pdb
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.Donnatello.resources
+C:\Users\sligh\source\repos\Donnatello\Donnatello\obj\Debug\Donnatello.csprojAssemblyReference.cache
