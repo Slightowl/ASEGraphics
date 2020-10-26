@@ -25,8 +25,7 @@ namespace Donnatello
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
         }
 
-
-
+        // method handles single textbox commands
         private void CommandLine_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -36,32 +35,47 @@ namespace Donnatello
                 // put input into an array and split it into command and parameters
                 String[] inputs = input.Split(' ');
 
-                String command = inputs[0];
-                int param1 = int.Parse(inputs[1]);
-                int param2 = int.Parse(inputs[2]);
-
-                // moveline, parameter, parameter
-                if (inputs[0].Equals("moveline") == true)
+                try
                 {
-                    Canvas.MoveLine(param1, param2);
-                    Console.WriteLine("move sucess");
+                    String command = inputs[0];
+                    int param1 = int.Parse(inputs[1]);
+                    int param2 = int.Parse(inputs[2]);
+
+                    if (inputs[0].Equals("moveline") == true)
+                    {
+                        Canvas.MoveLine(param1, param2);
+                        StatusBar.Text = "Suceess! Moved pen to: " + "x " + 
+                            param1.ToString() + " y " + param2.ToString() + " coordinates";
+                    }
+
+                    else if (inputs[0].Equals("drawline") == true)
+                    {
+                        Canvas.DrawLine(param1, param2);
+                        StatusBar.Text = "Suceess! Line drawn to: " + "x " + 
+                            param1.ToString()+ " y " + param2.ToString() + " coordinates";
+                    }
+
+                    else if (inputs[0].Equals("drawsquare") == true)
+                    {
+                        Canvas.DrawSquare(param1, param2);
+                        StatusBar.Text = "Suceess! Sqaure drawn with: " + "width " + 
+                            param1.ToString() + " length " + param2.ToString() + " dimensions";
+                    }
+                   
+
+                    CommandLine.Text = "";
+                    Refresh();
+                }
+                catch (FormatException i)
+                {
+                    StatusBar.Text = "Format should be 'command number number' ... " + i.Message;
+                }
+                catch (IndexOutOfRangeException i)
+                {
+                    StatusBar.Text = "Format should be 'command number number' ... " + i.Message;
                 }
 
-                // drawline, parameter, parameter
-                if (inputs[0].Equals("drawline") ==  true)
-                {
-                    Canvas.DrawLine(param1, param2);
-                    Console.WriteLine("line sucess");
-                }
-
-                // drawsquare, parameter, parameter
-                if (inputs[0].Equals("drawsquare") == true)
-                {
-                    Canvas.DrawSquare(param1, param2);
-                    Console.WriteLine("square sucess");
-                }
-                CommandLine.Text = "";
-                Refresh();
+                
             }
         }
         private void PaintBox_Paint(object sender, PaintEventArgs e)
@@ -70,5 +84,6 @@ namespace Donnatello
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutPutBitmap, 0, 0);
         }
+
     }
 }

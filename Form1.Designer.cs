@@ -39,8 +39,10 @@
             this.MultiCommands = new System.Windows.Forms.RichTextBox();
             this.CommandLine = new System.Windows.Forms.TextBox();
             this.RunButton = new System.Windows.Forms.Button();
+            this.StatusBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PaintBox)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -96,6 +98,8 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusBar});
             this.statusStrip1.Location = new System.Drawing.Point(0, 428);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
@@ -127,6 +131,13 @@
             this.RunButton.Text = "Run";
             this.RunButton.UseVisualStyleBackColor = true;
             // 
+            // StatusBar
+            // 
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(45, 17);
+            this.StatusBar.Text = "STATUS";
+            this.StatusBar.TextChanged += new System.EventHandler(this.StatusBar_TextChanged);
+            // 
             // Donnatello
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -143,6 +154,8 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PaintBox)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,6 +173,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveProgramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetProgramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWindowToolStripMenuItem;
+        public System.Windows.Forms.ToolStripStatusLabel StatusBar;
     }
 }
 
