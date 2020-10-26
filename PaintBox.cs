@@ -18,7 +18,12 @@ namespace Donnatello
         {
             this.g = g;
             xPos = yPos = 0;
-            Pen = new Pen(Color.Green, 3);
+            Pen = new Pen(Color.Green, 5);
+        }
+        public void MoveLine(int MoveToX, int MoveToY)
+        {
+            xPos = MoveToX;
+            yPos = MoveToY;
         }
         public void DrawLine(int MoveToX, int MoveToY)
         {
@@ -26,9 +31,9 @@ namespace Donnatello
             xPos = MoveToX;
             yPos = MoveToY;
         }
-        public void DrawSquare(int width)
+        public void DrawSquare(int width, int length)
         {
-            g.DrawRectangle(Pen, xPos, yPos, xPos + width, yPos + width);
+            g.DrawRectangle(Pen, xPos, yPos, length + width, length + width);
         }
 
     }
