@@ -36,10 +36,10 @@
             this.closeWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PaintBox = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.MultiCommands = new System.Windows.Forms.RichTextBox();
+            this.StatusBar = new System.Windows.Forms.ToolStripStatusLabel();
             this.CommandLine = new System.Windows.Forms.TextBox();
             this.RunButton = new System.Windows.Forms.Button();
-            this.StatusBar = new System.Windows.Forms.ToolStripStatusLabel();
+            this.MultiCommand = new System.Windows.Forms.TextBox();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PaintBox)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -106,16 +106,18 @@
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // MultiCommands
+            // StatusBar
             // 
-            this.MultiCommands.Location = new System.Drawing.Point(12, 42);
-            this.MultiCommands.Name = "MultiCommands";
-            this.MultiCommands.Size = new System.Drawing.Size(314, 321);
-            this.MultiCommands.TabIndex = 3;
-            this.MultiCommands.Text = "";
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(45, 17);
+            this.StatusBar.Text = "STATUS";
             // 
             // CommandLine
             // 
+            this.CommandLine.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.CommandLine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.CommandLine.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CommandLine.ForeColor = System.Drawing.Color.Lime;
             this.CommandLine.Location = new System.Drawing.Point(12, 380);
             this.CommandLine.Name = "CommandLine";
             this.CommandLine.Size = new System.Drawing.Size(223, 20);
@@ -131,21 +133,27 @@
             this.RunButton.Text = "Run";
             this.RunButton.UseVisualStyleBackColor = true;
             // 
-            // StatusBar
+            // MultiCommand
             // 
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(45, 17);
-            this.StatusBar.Text = "STATUS";
-            this.StatusBar.TextChanged += new System.EventHandler(this.StatusBar_TextChanged);
+            this.MultiCommand.AcceptsReturn = true;
+            this.MultiCommand.BackColor = System.Drawing.SystemColors.InactiveCaptionText;
+            this.MultiCommand.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MultiCommand.ForeColor = System.Drawing.Color.Lime;
+            this.MultiCommand.Location = new System.Drawing.Point(12, 42);
+            this.MultiCommand.Multiline = true;
+            this.MultiCommand.Name = "MultiCommand";
+            this.MultiCommand.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.MultiCommand.Size = new System.Drawing.Size(314, 332);
+            this.MultiCommand.TabIndex = 6;
             // 
             // Donnatello
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.MultiCommand);
             this.Controls.Add(this.RunButton);
             this.Controls.Add(this.CommandLine);
-            this.Controls.Add(this.MultiCommands);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.PaintBox);
             this.Controls.Add(this.toolStrip1);
@@ -166,7 +174,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.PictureBox PaintBox;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.RichTextBox MultiCommands;
         private System.Windows.Forms.TextBox CommandLine;
         private System.Windows.Forms.Button RunButton;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
@@ -174,6 +181,7 @@
         private System.Windows.Forms.ToolStripMenuItem resetProgramToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeWindowToolStripMenuItem;
         public System.Windows.Forms.ToolStripStatusLabel StatusBar;
+        private System.Windows.Forms.TextBox MultiCommand;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
@@ -33,7 +34,7 @@ namespace Donnatello
                 String input = CommandLine.Text.Trim().ToLower();
 
                 // put input into an array and split it into command and parameters
-                String[] inputs = input.Split(' ');
+                String[] inputs = input.Split(' ', ',');
 
                 try
                 {
@@ -44,24 +45,27 @@ namespace Donnatello
                     if (inputs[0].Equals("moveline") == true)
                     {
                         Canvas.MoveLine(param1, param2);
-                        StatusBar.Text = "Suceess! Moved pen to: " + "x " + 
+                        StatusBar.Text = "Sucess! Moved pen to: " + "x " +
                             param1.ToString() + " y " + param2.ToString() + " coordinates";
                     }
 
                     else if (inputs[0].Equals("drawline") == true)
                     {
                         Canvas.DrawLine(param1, param2);
-                        StatusBar.Text = "Suceess! Line drawn to: " + "x " + 
+                        StatusBar.Text = "Sucess! Line drawn to: " + "x " + 
                             param1.ToString()+ " y " + param2.ToString() + " coordinates";
                     }
 
                     else if (inputs[0].Equals("drawsquare") == true)
                     {
                         Canvas.DrawSquare(param1, param2);
-                        StatusBar.Text = "Suceess! Sqaure drawn with: " + "width " + 
+                        StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " + 
                             param1.ToString() + " length " + param2.ToString() + " dimensions";
                     }
-                   
+                    else if (inputs[0].Equals("run") == true)
+                    {
+                        MultiLineInputs();
+                    }
 
                     CommandLine.Text = "";
                     Refresh();
@@ -78,12 +82,24 @@ namespace Donnatello
                 
             }
         }
+
+        public string[] MultiLineInputs()
+        {
+            string commands = MultiCommand.Text;
+            string[] lines = MultiCommand.Lines;
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Console.WriteLine(lines[i]);
+            }
+            return lines[];
+        }
+
         private void PaintBox_Paint(object sender, PaintEventArgs e)
         {
             // get graphics context of form (displayed)
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutPutBitmap, 0, 0);
         }
-
     }
 }
