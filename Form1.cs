@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ namespace Donnatello
         static int ScreenSizeY = 640;
         static int ScreenSizeX = 480;
 
+        ArrayList shapes = new ArrayList();
         Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX); 
         PaintBox Canvas;
 
@@ -26,9 +28,24 @@ namespace Donnatello
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
         }
 
+        
+
         // method handles single textbox commands
-        private void CommandLine_KeyDown(object sender, KeyEventArgs e)
+        public void CommandLine_KeyDown(object sender, KeyEventArgs e)
         {
+            ShapeFactory factory = new ShapeFactory();
+
+            try
+            {
+                shapes.Add(factory.GetShapes("circle"));
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine("Invalid shape: " + ex);
+
+            }
+
+
             if (e.KeyCode == Keys.Enter)
             {
                 String input = CommandLine.Text.Trim().ToLower();
@@ -48,6 +65,10 @@ namespace Donnatello
                         StatusBar.Text = "Sucess! Moved pen to: " + "x " +
                             param1.ToString() + " y " + param2.ToString() + " coordinates";
                     }
+                    else if (inputs[0].Equals("drawcircle") == true)
+                    {
+                        
+                    }
 
                     else if (inputs[0].Equals("drawline") == true)
                     {
@@ -56,7 +77,7 @@ namespace Donnatello
                             param1.ToString()+ " y " + param2.ToString() + " coordinates";
                     }
 
-                    else if (inputs[0].Equals("drawsquare") == true)
+                    else if (inputs[0].Equals("drawrect") == true)
                     {
                         Canvas.DrawSquare(param1, param2);
                         StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " + 
@@ -64,7 +85,40 @@ namespace Donnatello
                     }
                     else if (inputs[0].Equals("run") == true)
                     {
-                        MultiLineInputs();
+                        string commands = MultiCommand.Text;
+                        //string[] lines = MultiCommand.Lines;
+
+                        List<string> commandList = new List<string>(
+                            commands.Split(new string[] { "\r\n" },
+                            StringSplitOptions.RemoveEmptyEntries));
+
+                        // commandList.ForEach(Console.WriteLine);
+
+                        foreach (string _command in commandList)
+                        {
+                            String[] _commands = _command.Split(' ', ',');
+
+                            String p1 = _commands[0];
+                            int p2 = int.Parse(_commands[1]);
+                            int p3 = int.Parse(_commands[2]);
+
+                            if (p1.Equals("drawline") == true)
+                            {
+                                Canvas.DrawLine(p2, p3);
+                                StatusBar.Text = "Sucess! Line drawn to: " + "x " +
+                                    p2.ToString() + " y " + p3.ToString() + " coordinates";
+
+                                System.Threading.Thread.Sleep(500);
+                            }
+                            else if (p1.Equals("drawrect") == true)
+                            {
+                                Canvas.DrawSquare(p2, p3);
+                                StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " +
+                                    p2.ToString() + " length " + p3.ToString() + " dimensions";
+
+                                System.Threading.Thread.Sleep(500);
+                            }
+                        }
                     }
 
                     CommandLine.Text = "";
@@ -92,7 +146,7 @@ namespace Donnatello
             {
                 Console.WriteLine(lines[i]);
             }
-            return lines[];
+            return lines;
         }
 
         private void PaintBox_Paint(object sender, PaintEventArgs e)
@@ -100,6 +154,7 @@ namespace Donnatello
             // get graphics context of form (displayed)
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutPutBitmap, 0, 0);
+            
         }
     }
 }
