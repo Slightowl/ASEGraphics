@@ -8,6 +8,8 @@ namespace Donnatello
 {
     class TextParser
     {
+        string input;
+        string[] inputs;
 
 
 
