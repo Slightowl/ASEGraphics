@@ -24,16 +24,13 @@ namespace Donnatello
         public Donnatello()
         {
             InitializeComponent();
-           
-            Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
-            //Circle = new Circle(Graphics.FromImage(OutputBitmap));
 
+            Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
         }
 
         // method handles single textbox commands
         public void CommandLine_KeyDown(object sender, KeyEventArgs e)
         {
-
 
             if (e.KeyCode == Keys.Enter)
             {
@@ -73,6 +70,13 @@ namespace Donnatello
                         StatusBar.Text = "Pen changed to green";
                     }
 
+                    else if (inputs[0].Equals("fillon") == true)
+                    {
+                        Canvas.SolidBrushOn();
+                        StatusBar.Text = "Fill shape is activated";
+
+                    }
+
                     else if (inputs[0].Equals("drawline") == true)
                     {
                         Canvas.DrawLine(param1, param2);
@@ -105,13 +109,12 @@ namespace Donnatello
                     else if (inputs[0].Equals("run") == true)
                     {
                         string commands = MultiCommand.Text;
-                        //string[] lines = MultiCommand.Lines;
+                        
 
                         List<string> commandList = new List<string>(
                             commands.Split(new string[] { "\r\n" },
                             StringSplitOptions.RemoveEmptyEntries));
 
-                        // commandList.ForEach(Console.WriteLine);
 
                         foreach (string _command in commandList)
                         {
@@ -150,9 +153,7 @@ namespace Donnatello
                 catch (IndexOutOfRangeException i)
                 {
                     StatusBar.Text = "Format should be 'command number number' ... " + i.Message;
-                }
-
-                
+                } 
             }
         }
         private void PaintBox_Paint(object sender, PaintEventArgs e)

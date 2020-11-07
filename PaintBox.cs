@@ -11,6 +11,8 @@ namespace Donnatello
     {
         Graphics g;
         Pen Pen;
+        Brush Brush;
+        bool fillShape;
      
         int xPos, yPos;
 
@@ -20,13 +22,32 @@ namespace Donnatello
             this.g = g;
             xPos = yPos = 0;
             Pen = new Pen(Color.Green, 5);
+            Brush = new SolidBrush(Color.Aqua);
          
         }
 
+        public void SolidBrushOn()
+        {
+            fillShape = true;
 
+        }
+
+        // change pen colour red
         public void PenColourRed()
         {
             Pen.Color = Color.Red;
+        }
+
+        // change pen colour blue
+        public void PenColourBlue()
+        {
+            Pen.Color = Color.Blue;
+        }
+
+        // change pen colour green (default)
+        public void PenColourGreen()
+        {
+            Pen.Color = Color.Green;
         }
 
         // moves pen to designated coordinate
@@ -47,7 +68,15 @@ namespace Donnatello
         // draws rectangle or square
         public void DrawSquare(int width, int length)
         {
-            g.DrawRectangle(Pen, xPos, yPos, width, length);
+            if (fillShape == true)
+            {
+                g.FillRectangle(Brush, xPos, yPos, width, length);
+                g.DrawRectangle(Pen, xPos, yPos, width, length);
+            }
+            else
+            {
+                g.DrawRectangle(Pen, xPos, yPos, width, length);
+            }
         }
 
         //draws circle
