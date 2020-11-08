@@ -115,9 +115,37 @@ namespace Donnatello
             }
         }
 
-        public void DrawTriangle()
+        /// <summary>Draws the triangle.</summary>
+        /// <param name="point1">The point1.</param>
+        /// <param name="point2">The point2.</param>
+        /// <param name="point3">The point3.</param>
+        /// <param name="point4">The point4.</param>
+        /// <param name="point5">The point5.</param>
+        /// <param name="point6">The point6.</param>
+        public void DrawTriangle(int point1, int point2, int point3
+            , int point4, int point5, int point6)
         {
-            //Todo
+            Point pointOne = new Point(point1, point2);
+            Point pointTwo = new Point(point3, point4);
+            Point pointThree = new Point(point5, point6);
+            Point[] curvePoints =
+            {
+                pointOne,
+                pointTwo,
+                pointThree
+            };
+
+            if (fillShape == true)
+            {
+                g.FillPolygon(Brush, curvePoints);
+                g.DrawPolygon(Pen, curvePoints);
+
+            }
+            else
+            {
+                g.DrawPolygon(Pen, curvePoints);
+            }
+
         }
 
 

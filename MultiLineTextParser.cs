@@ -11,17 +11,19 @@ namespace Donnatello
         PaintBox Canvas;
         TextParser TextParser;
 
+        /// <summary>Initializes a new instance of the <see cref="MultiLineTextParser" /> class.</summary>
+        /// <param name="paintBox">The paint box.</param>
+        /// <param name="textParser">The text parser.</param>
         public MultiLineTextParser(PaintBox paintBox, TextParser textParser)
         {
             this.Canvas = paintBox;
             this.TextParser = textParser;
         }
 
+        /// <summary>Multis the parse.</summary>
+        /// <param name="commands">The commands.</param>
         public void MultiParse(string commands)
         {
-            /*string command = "default";
-            int param1 = 10;
-            int param2 = 10;*/
 
             List<string> commandList = new List<string>(
                             commands.Split(new string[] { "\r\n" },
@@ -29,8 +31,7 @@ namespace Donnatello
 
             foreach (string input in commandList)
             {
-                //String[] inputs = command.Split(' ', ',');
-                Console.WriteLine(input);
+                //Console.WriteLine(input);
                 TextParser.Parse(input);
             }
         }

@@ -1,15 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Donnatello
@@ -47,72 +39,62 @@ namespace Donnatello
                 String input = CommandLine.Text.Trim().ToLower();
                 String commands = MultiCommand.Text.Trim().ToLower();
 
-                try
+
+                if (input.Equals("run") == true)
                 {
-                    if (input.Equals("run") == true)
+                    multi.MultiParse(commands);
+                }
+
+                else if (input.Equals("saveprogram") == true)
+                {
+                    SaveFileDialog newProgram = new SaveFileDialog();
+                    string getProgram = MultiCommand.Text;
+
+                    List<string> commandList = new List<string>(
+                        getProgram.Split(new string[] { "\r\n" },
+                        StringSplitOptions.RemoveEmptyEntries));
+
+                    if (newProgram.ShowDialog() == DialogResult.OK)
                     {
-                        multi.MultiParse(commands);  
-                    }
+                        StreamWriter writer = new StreamWriter(newProgram.FileName);
 
-                    else if (input.Equals("saveprogram") == true)
-                    {
-                        SaveFileDialog newProgram = new SaveFileDialog();
-                        string getProgram = MultiCommand.Text;
-
-                        List<string> commandList = new List<string>(
-                            getProgram.Split(new string[] { "\r\n" },
-                            StringSplitOptions.RemoveEmptyEntries));
-
-                        if (newProgram.ShowDialog() == DialogResult.OK)
+                        for (int k = 0; k < commandList.Count; k++)
                         {
-                            StreamWriter writer = new StreamWriter(newProgram.FileName);
-
-                            for (int k = 0; k < commandList.Count; k++)
-                            {
-                                writer.WriteLine(commandList[k]);
-                            }
-                            writer.Close();
+                            writer.WriteLine(commandList[k]);
                         }
+                        writer.Close();
                     }
+                }
 
-                    else if (input.Equals("loadprogram") == true)
+                else if (input.Equals("loadprogram") == true)
+                {
+                    var fileContent = string.Empty;
+                    var filePath = string.Empty;
+
+                    using (OpenFileDialog openFileDialog = new OpenFileDialog())
                     {
-                        var fileContent = string.Empty;
-                        var filePath = string.Empty;
-
-                        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
                         {
-                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                            filePath = openFileDialog.FileName;
+
+                            var fileStream = openFileDialog.OpenFile();
+
+                            using (StreamReader reader = new StreamReader(fileStream))
                             {
-                                filePath = openFileDialog.FileName;
-
-                                var fileStream = openFileDialog.OpenFile();
-
-                                using (StreamReader reader = new StreamReader(fileStream))
-                                {
-                                    fileContent = reader.ReadToEnd();
-                                    MultiCommand.Text = fileContent;
-                                }
+                                fileContent = reader.ReadToEnd();
+                                MultiCommand.Text = fileContent;
                             }
                         }
                     }
-
-                    else
-                    {
-                        textParser.Parse(CommandLine.Text);
-                    }
-
-                    CommandLine.Text = "";
-                    Refresh();
                 }
-                catch (FormatException i)
+
+                else
                 {
-                    StatusBar.Text = "Format should be 'command number number' ... " + i.Message;
+                    textParser.Parse(input); 
                 }
-                catch (IndexOutOfRangeException i)
-                {
-                    StatusBar.Text = "Format should be 'command number number' ... " + i.Message;
-                } 
+
+                CommandLine.Text = "";
+                Refresh();
             }
         }
 
@@ -125,6 +107,9 @@ namespace Donnatello
             Graphics g = e.Graphics;
             g.DrawImageUnscaled(OutPutBitmap, 0, 0);
             
+            
         }
+
+        
     }
 }
