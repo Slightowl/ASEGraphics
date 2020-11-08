@@ -5,30 +5,46 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Donnatello
 {
+   
     public partial class Donnatello : Form
     {
         static int ScreenSizeY = 640;
         static int ScreenSizeX = 480;
 
+        TextParser textParser;
+        // StatusBar statusBar;
+
+        string command = "drawline";
+        int param1 = 100;
+        int param2 = 100;
 
         Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX);
         PaintBox Canvas;
 
+
+        /// <summary>Initializes a new instance of the <see cref="Donnatello" /> class.</summary>
         public Donnatello()
         {
             InitializeComponent();
-
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
+            textParser = new TextParser(Canvas);
+            
+
         }
 
-        // method handles single textbox commands
+        /// method handles commandline inputs
+        /// <summary>Handles the KeyDown event of the CommandLine control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="KeyEventArgs" /> instance containing the event data.</param>
         public void CommandLine_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -36,80 +52,12 @@ namespace Donnatello
             {
                 String input = CommandLine.Text.Trim().ToLower();
 
-                // put input into an array and split it into command and parameters
-                String[] inputs = input.Split(' ', ',');
-
                 try
                 {
-                    String command = inputs[0];
-                    int param1 = int.Parse(inputs[1]);
-                    int param2 = int.Parse(inputs[2]);
-
-                    if (inputs[0].Equals("moveline") == true)
-                    {
-                        Canvas.MoveLine(param1, param2);
-                        StatusBar.Text = "Sucess! Moved pen to: " + "x " +
-                            param1.ToString() + " y " + param2.ToString() + " coordinates";
-                    }
-                   
-                    else if (inputs[0].Equals("penred") == true)
-                    {
-                        Canvas.PenColourRed();
-                        StatusBar.Text = "Pen changed to red";
-                    }
-
-                    else if (inputs[0].Equals("penblue") == true)
-                    {
-                        Canvas.PenColourBlue();
-                        StatusBar.Text = "Pen changed to blue";
-                    }
-
-                    else if (inputs[0].Equals("pengreen") == true)
-                    {
-                        Canvas.PenColourGreen();
-                        StatusBar.Text = "Pen changed to green";
-                    }
-
-                    else if (inputs[0].Equals("fillon") == true)
-                    {
-                        Canvas.SolidBrushOn();
-                        StatusBar.Text = "Fill shape is activated";
-
-                    }
-
-                    else if (inputs[0].Equals("drawline") == true)
-                    {
-                        Canvas.DrawLine(param1, param2);
-                        StatusBar.Text = "Sucess! Line drawn to: " + "x " + 
-                            param1.ToString()+ " y " + param2.ToString() + " coordinates";
-                    }
-
-                    else if (inputs[0].Equals("drawrect") == true)
-                    {
-                        Canvas.DrawSquare(param1, param2);
-                        StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " + 
-                            param1.ToString() + " length " + param2.ToString() + " dimensions";
-                    }
-
-                    else if (inputs[0].Equals("circle") == true)
-                    {
-                        Canvas.DrawCircle(param1, param2);
-                    }
-
-                    else if (inputs[0].Equals("clear") == true)
-                    {
-                        Canvas.Clear();
-                    }
-
-                    else if (inputs[0].Equals("reset") == true)
-                    {
-                        Canvas.Reset(0, 0);
-                    }
-
-                    else if (inputs[0].Equals("run") == true)
+                    if (command.Equals("run") == true)
                     {
                         string commands = MultiCommand.Text;
-                        
+
 
                         List<string> commandList = new List<string>(
                             commands.Split(new string[] { "\r\n" },
@@ -137,10 +85,57 @@ namespace Donnatello
                                 StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " +
                                     p2.ToString() + " length " + p3.ToString() + " dimensions";
 
-                                
                             }
                             System.Threading.Thread.Sleep(500);
                         }
+                    }
+
+                    else if (command.Equals("saveprogram") == true)
+                    {
+                        SaveFileDialog newProgram = new SaveFileDialog();
+                        string getProgram = MultiCommand.Text;
+
+                        List<string> commandList = new List<string>(
+                            getProgram.Split(new string[] { "\r\n" },
+                            StringSplitOptions.RemoveEmptyEntries));
+
+                        if (newProgram.ShowDialog() == DialogResult.OK)
+                        {
+                            StreamWriter writer = new StreamWriter(newProgram.FileName);
+
+                            for (int k = 0; k < commandList.Count; k++)
+                            {
+                                writer.WriteLine(commandList[k]);
+                            }
+                            writer.Close();
+                        }
+                    }
+
+                    else if (command.Equals("loadprogram") == true)
+                    {
+                        var fileContent = string.Empty;
+                        var filePath = string.Empty;
+
+                        using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                        {
+                            if (openFileDialog.ShowDialog() == DialogResult.OK)
+                            {
+                                filePath = openFileDialog.FileName;
+
+                                var fileStream = openFileDialog.OpenFile();
+
+                                using (StreamReader reader = new StreamReader(fileStream))
+                                {
+                                    fileContent = reader.ReadToEnd();
+                                    MultiCommand.Text = fileContent;
+                                }
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        textParser.Parse(CommandLine.Text);
                     }
 
                     CommandLine.Text = "";
@@ -156,6 +151,10 @@ namespace Donnatello
                 } 
             }
         }
+
+        /// <summary>Handles the Paint event of the PaintBox control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="PaintEventArgs" /> instance containing the event data.</param>
         private void PaintBox_Paint(object sender, PaintEventArgs e)
         {
             // get graphics context of form (displayed)
