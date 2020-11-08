@@ -21,15 +21,10 @@ namespace Donnatello
         static int ScreenSizeX = 480;
 
         TextParser textParser;
-        // StatusBar statusBar;
-
-        string command = "drawline";
-        int param1 = 100;
-        int param2 = 100;
-
-        Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX);
+        MultiLineTextParser multi;
         PaintBox Canvas;
 
+        Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX);
 
         /// <summary>Initializes a new instance of the <see cref="Donnatello" /> class.</summary>
         public Donnatello()
@@ -37,8 +32,7 @@ namespace Donnatello
             InitializeComponent();
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
             textParser = new TextParser(Canvas);
-            
-
+            multi = new MultiLineTextParser(Canvas, textParser);
         }
 
         /// method handles commandline inputs
@@ -51,46 +45,16 @@ namespace Donnatello
             if (e.KeyCode == Keys.Enter)
             {
                 String input = CommandLine.Text.Trim().ToLower();
+                String commands = MultiCommand.Text.Trim().ToLower();
 
                 try
                 {
-                    if (command.Equals("run") == true)
+                    if (input.Equals("run") == true)
                     {
-                        string commands = MultiCommand.Text;
-
-
-                        List<string> commandList = new List<string>(
-                            commands.Split(new string[] { "\r\n" },
-                            StringSplitOptions.RemoveEmptyEntries));
-
-
-                        foreach (string _command in commandList)
-                        {
-                            String[] _commands = _command.Split(' ', ',');
-
-                            String p1 = _commands[0];
-                            int p2 = int.Parse(_commands[1]);
-                            int p3 = int.Parse(_commands[2]);
-
-                            if (p1.Equals("drawline") == true)
-                            {
-                                Canvas.DrawLine(p2, p3);
-                                StatusBar.Text = "Sucess! Line drawn to: " + "x " +
-                                    p2.ToString() + " y " + p3.ToString() + " coordinates";
-
-                            }
-                            else if (p1.Equals("drawrect") == true)
-                            {
-                                Canvas.DrawSquare(p2, p3);
-                                StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " +
-                                    p2.ToString() + " length " + p3.ToString() + " dimensions";
-
-                            }
-                            System.Threading.Thread.Sleep(500);
-                        }
+                        multi.MultiParse(commands);  
                     }
 
-                    else if (command.Equals("saveprogram") == true)
+                    else if (input.Equals("saveprogram") == true)
                     {
                         SaveFileDialog newProgram = new SaveFileDialog();
                         string getProgram = MultiCommand.Text;
@@ -111,7 +75,7 @@ namespace Donnatello
                         }
                     }
 
-                    else if (command.Equals("loadprogram") == true)
+                    else if (input.Equals("loadprogram") == true)
                     {
                         var fileContent = string.Empty;
                         var filePath = string.Empty;

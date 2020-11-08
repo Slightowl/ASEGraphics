@@ -11,9 +11,6 @@ namespace Donnatello
     {
         PaintBox Canvas;
 
-        
-
-        
         /// <summary>Initializes a new instance of the <see cref="TextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="statusBar">The status bar.</param>
@@ -40,6 +37,7 @@ namespace Donnatello
                             StringSplitOptions.RemoveEmptyEntries));
 
 
+            // loops through list and assigns paramters to needed user parameters
             for (int j = 0; j < inputParams.Count; j++)
             {
 
@@ -66,13 +64,8 @@ namespace Donnatello
                 }
             }
 
-            //Console.WriteLine(command + "\n" + param1 + "\n" + param2);*/
 
-            //String command = inputs[0];
-            //int param1 = int.Parse(inputs[1]);
-            //int param2 = int.Parse(inputs[2]);
-
-            if (command.Equals("moveline") == true)
+            if (command.Equals("moveto") == true)
             {
                 Canvas.MoveLine(param1, param2);
                 /*StatusBar.Text = "Sucess! Moved pen to: " + "x " +
@@ -104,14 +97,14 @@ namespace Donnatello
 
             }
 
-            else if (command.Equals("drawline") == true)
+            else if (command.Equals("drawto") == true)
             {
                 Canvas.DrawLine(param1, param2);
                 /*StatusBar.Text = "Sucess! Line drawn to: " + "x " +
                     param1.ToString() + " y " + param2.ToString() + " coordinates";*/
             }
 
-            else if (command.Equals("drawrect") == true)
+            else if (command.Equals("rect") == true)
             {
                 Canvas.DrawSquare(param1, param2);
                 /*StatusBar.Text = "Sucess! Sqaure drawn with: " + "width " +
