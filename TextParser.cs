@@ -10,7 +10,6 @@ namespace Donnatello
     class TextParser
     {
         PaintBox Canvas;
-        StatusBar StatusBar;
         //Form form;
 
         StatusBar statusBar = new StatusBar();
@@ -38,6 +37,8 @@ namespace Donnatello
             int param4 = 0;
             int param5 = 0;
             int param6 = 0;
+
+            string statusUpdate = statusBar.Text;
             
 
             //string status = StatusBar.Text;
@@ -65,7 +66,7 @@ namespace Donnatello
                     }
                     catch (FormatException e)
                     {
-                        statusBar.Text = "Invalid parameter (must be an integer): " + e.Message;
+                        statusUpdate = "Invalid parameter (must be an integer): " + e.Message;
                         Console.WriteLine("Invalid parameter (must be an integer): " + e.Message);
 
                         Console.WriteLine(param1);
@@ -111,8 +112,8 @@ namespace Donnatello
                 if (command.Equals("moveto") == true)
                 {
                     Canvas.MoveLine(param1, param2);
-                    /*StatusBar.Text = "Sucess! Moved pen to: " + "x " +
-                        param1.ToString() + " y " + param2.ToString() + " coordinates";*/
+                    statusUpdate = "Sucess! Moved pen to: " + "x " +
+                        param1.ToString() + " y " + param2.ToString() + " coordinates";
                 }
 
                 else if (command.Equals("penred") == true)
@@ -174,7 +175,7 @@ namespace Donnatello
                 }
                 else
                 {
-                    //StatusBar.Text = "Please enter a valid input";
+                    //StatusBar.Text = "Please enter a valid command";
                 }
 
             }

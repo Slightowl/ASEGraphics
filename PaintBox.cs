@@ -9,13 +9,16 @@ using System.Windows.Forms;
 namespace Donnatello
 {
 
+   
+
     class PaintBox
     {
         Graphics g;
         Pen Pen;
         Brush Brush;
         bool fillShape;
-     
+        bool testing;
+
         int xPos, yPos;
 
 
@@ -30,6 +33,12 @@ namespace Donnatello
             Pen.EndCap = System.Drawing.Drawing2D.LineCap.RoundAnchor;
             Pen.StartCap = System.Drawing.Drawing2D.LineCap.RoundAnchor;
             
+        }
+
+
+        public PaintBox()
+        {
+            testing = true;
         }
 
         /// <summary>Turns the brush on.</summary>
@@ -80,7 +89,17 @@ namespace Donnatello
             g.DrawLine(Pen, xPos, yPos, MoveToX, MoveToY);
             xPos = MoveToX;
             yPos = MoveToY;
+
+            // testing purposes
+            if (testing == false)
+            {
+                g.DrawLine(Pen, xPos, yPos, MoveToX, MoveToY);
+            }
+
         }
+
+    
+            
 
         /// <summary>Draws the square.</summary>
         /// <param name="width">The width.</param>
@@ -116,12 +135,12 @@ namespace Donnatello
         }
 
         /// <summary>Draws the triangle.</summary>
-        /// <param name="point1">The point1.</param>
-        /// <param name="point2">The point2.</param>
-        /// <param name="point3">The point3.</param>
-        /// <param name="point4">The point4.</param>
-        /// <param name="point5">The point5.</param>
-        /// <param name="point6">The point6.</param>
+        /// <param name="point1">1st x pos.</param>
+        /// <param name="point2">1st y pos.</param>
+        /// <param name="point3">2nd x pos.</param>
+        /// <param name="point4">2nd y pos.</param>
+        /// <param name="point5">3rd x pos.</param>
+        /// <param name="point6">3rd y pos.</param>
         public void DrawTriangle(int point1, int point2, int point3
             , int point4, int point5, int point6)
         {
@@ -139,7 +158,6 @@ namespace Donnatello
             {
                 g.FillPolygon(Brush, curvePoints);
                 g.DrawPolygon(Pen, curvePoints);
-
             }
             else
             {
