@@ -15,6 +15,7 @@ namespace Donnatello
         TextParser textParser;
         MultiLineTextParser multi;
         PaintBox Canvas;
+        StatusBar Status;
 
         Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX);
 
@@ -23,7 +24,7 @@ namespace Donnatello
         {
             InitializeComponent();
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
-            textParser = new TextParser(Canvas);
+            textParser = new TextParser(Canvas, Status);
             multi = new MultiLineTextParser(Canvas, textParser);
         }
 
@@ -43,6 +44,7 @@ namespace Donnatello
                 if (input.Equals("run") == true)
                 {
                     multi.MultiParse(commands);
+                    StatusBar.Text = "string";
                 }
 
                 else if (input.Equals("saveprogram") == true)

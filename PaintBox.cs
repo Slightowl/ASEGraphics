@@ -11,7 +11,7 @@ namespace Donnatello
 
    
 
-    class PaintBox
+    public class PaintBox
     {
         Graphics g;
         Pen Pen;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Donnatello
 {
-    class MultiLineTextParser
+    public class MultiLineTextParser
     {
         PaintBox Canvas;
         TextParser TextParser;

@@ -7,28 +7,24 @@ using System.Windows.Forms;
 
 namespace Donnatello
 {
-    class TextParser
+    public class TextParser
     {
         PaintBox Canvas;
-        //Form form;
-
-        StatusBar statusBar = new StatusBar();
-
 
         /// <summary>Initializes a new instance of the <see cref="TextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="statusBar">The status bar.</param>
-        public TextParser(PaintBox paintBox)
+        public TextParser(PaintBox paintBox, StatusBar statusBar)
         {
             this.Canvas = paintBox;
-            //this.form = form;
-            //this.StatusBar = statusBar;
         }
 
         /// <summary>Parses the specified input.</summary>
         /// <param name="input">The input.</param>
         public void Parse(string input)
         {
+
+
 
             string command = "default";
             int param1 = 0;
@@ -37,10 +33,7 @@ namespace Donnatello
             int param4 = 0;
             int param5 = 0;
             int param6 = 0;
-
-            string statusUpdate = statusBar.Text;
             
-
             //string status = StatusBar.Text;
 
             input = input.Trim().ToLower();
@@ -56,7 +49,6 @@ namespace Donnatello
                 if (j == 0)
                 {
                         command = inputParams[j];
-                        Console.WriteLine(command);
                 }
                 else if (j == 1)
                 {
@@ -66,10 +58,9 @@ namespace Donnatello
                     }
                     catch (FormatException e)
                     {
-                        statusUpdate = "Invalid parameter (must be an integer): " + e.Message;
-                        Console.WriteLine("Invalid parameter (must be an integer): " + e.Message);
+                        //StatusBar.Text = "Invalid parameter (must be an integer): " + e.Message;
 
-                        Console.WriteLine(param1);
+                        Console.WriteLine("Parameter 1 Inavlid (must be an integer): " + e.Message);
                     }
                 }
                 else if (j == 2)
@@ -80,10 +71,7 @@ namespace Donnatello
                     }
                     catch (FormatException e)
                     {
-                        statusBar.Text = "Invalid parameter (must be an integer): " + e.Message;
-                        Console.WriteLine("Invalid parameter (must be an integer): " + e.Message);
-
-                        Console.WriteLine(param2);
+                        Console.WriteLine("Parameter 2 Inavlid  (must be an integer): " + e.Message);
                     }
                 }
                 else if (j == 3)
@@ -112,8 +100,8 @@ namespace Donnatello
                 if (command.Equals("moveto") == true)
                 {
                     Canvas.MoveLine(param1, param2);
-                    statusUpdate = "Sucess! Moved pen to: " + "x " +
-                        param1.ToString() + " y " + param2.ToString() + " coordinates";
+                    /*statusUpdate = "Sucess! Moved pen to: " + "x " +
+                        param1.ToString() + " y " + param2.ToString() + " coordinates";*/
                 }
 
                 else if (command.Equals("penred") == true)
@@ -137,6 +125,12 @@ namespace Donnatello
                 else if (command.Equals("fillon") == true)
                 {
                     Canvas.SolidBrushOn();
+                    //StatusBar.Text = "Fill shape is activated";
+
+                }
+                else if (command.Equals("filloff") == true)
+                {
+                    Canvas.SolidBrushOff();
                     //StatusBar.Text = "Fill shape is activated";
 
                 }
@@ -175,7 +169,7 @@ namespace Donnatello
                 }
                 else
                 {
-                    //StatusBar.Text = "Please enter a valid command";
+                    Console.WriteLine("Invalid command: Needs to be a valid command");
                 }
 
             }
