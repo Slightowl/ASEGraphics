@@ -9,8 +9,6 @@ using System.Windows.Forms;
 namespace Donnatello
 {
 
-   
-
     public class PaintBox
     {
         Graphics g;

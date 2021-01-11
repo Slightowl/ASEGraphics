@@ -10,14 +10,17 @@ namespace Donnatello
     {
         PaintBox Canvas;
         TextParser TextParser;
+        VariableTextParser VariableTextParser;
+        string eq = "=";
 
         /// <summary>Initializes a new instance of the <see cref="MultiLineTextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="textParser">The text parser.</param>
-        public MultiLineTextParser(PaintBox paintBox, TextParser textParser)
+        public MultiLineTextParser(PaintBox paintBox, TextParser textParser, VariableTextParser variableTextParser)
         {
             this.Canvas = paintBox;
             this.TextParser = textParser;
+            this.VariableTextParser = variableTextParser;
         }
 
         /// <summary>Multis the parse.</summary>
@@ -31,8 +34,16 @@ namespace Donnatello
 
             foreach (string input in commandList)
             {
-                //Console.WriteLine(input);
-                TextParser.Parse(input);
+
+                if (input.Contains(eq) == true)
+                {
+                    VariableTextParser.Parse(input);
+                }
+                else
+                {
+                    TextParser.Parse(input);
+                }
+                
             }
         }
     }

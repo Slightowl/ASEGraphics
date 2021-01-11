@@ -24,9 +24,8 @@ namespace Donnatello
         public void Parse(string input)
         {
 
-
-
             string command = "default";
+            string assign = "=";
             int param1 = 0;
             int param2 = 0;
             int param3 = 0;
@@ -54,7 +53,17 @@ namespace Donnatello
                 {
                     try
                     {
-                        param1 = int.Parse(inputParams[j]);
+                        if(inputParams[j] == "=")
+                        {
+                            
+                            assign = param1.ToString();
+                        }
+                        else
+                        {
+                            param1 = int.Parse(inputParams[j]);
+
+                        }
+
                     }
                     catch (FormatException e)
                     {
@@ -94,6 +103,7 @@ namespace Donnatello
                 {
                     //StatusBar.Text = "Error: Either Invalid Command or Parameter";
                 }
+                Console.WriteLine(command + " " + assign + " " + param1);
             }
             try
             {
@@ -102,6 +112,11 @@ namespace Donnatello
                     Canvas.MoveLine(param1, param2);
                     /*statusUpdate = "Sucess! Moved pen to: " + "x " +
                         param1.ToString() + " y " + param2.ToString() + " coordinates";*/
+                }
+
+                else if (command.Equals(command + " " + assign + " " + param2))
+                {
+                    Console.WriteLine(command + " " + assign + param2);
                 }
 
                 else if (command.Equals("penred") == true)

@@ -13,6 +13,7 @@ namespace Donnatello
         static int ScreenSizeX = 480;
 
         TextParser textParser;
+        VariableTextParser variableTextParser;
         MultiLineTextParser multi;
         PaintBox Canvas;
         StatusBar Status;
@@ -25,7 +26,8 @@ namespace Donnatello
             InitializeComponent();
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
             textParser = new TextParser(Canvas, Status);
-            multi = new MultiLineTextParser(Canvas, textParser);
+            variableTextParser = new VariableTextParser(Canvas, Status);
+            multi = new MultiLineTextParser(Canvas, textParser, variableTextParser);
         }
 
         /// method handles commandline inputs
