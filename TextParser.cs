@@ -10,13 +10,15 @@ namespace Donnatello
     public class TextParser
     {
         PaintBox Canvas;
+        VariableTextParser VariableTextParser;
 
         /// <summary>Initializes a new instance of the <see cref="TextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="statusBar">The status bar.</param>
-        public TextParser(PaintBox paintBox, StatusBar statusBar)
+        public TextParser(PaintBox paintBox, StatusBar statusBar, VariableTextParser variableTextParser)
         {
             this.Canvas = paintBox;
+            this.VariableTextParser = variableTextParser;
         }
 
         /// <summary>Parses the specified input.</summary>
@@ -192,7 +194,6 @@ namespace Donnatello
             {
                 Console.WriteLine("Command was invalid, please enter a valid command. Error: " + e.Message);
             }
-            
         }
     }
 }

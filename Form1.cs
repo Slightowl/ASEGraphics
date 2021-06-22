@@ -47,6 +47,7 @@ namespace Donnatello
                 {
                     multi.MultiParse(commands);
                     StatusBar.Text = "string";
+                    
                 }
 
                 else if (input.Equals("saveprogram") == true)

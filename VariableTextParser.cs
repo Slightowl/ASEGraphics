@@ -4,26 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
+
 
 namespace Donnatello
 {
     public class VariableTextParser
     {
-
-
         PaintBox Canvas;
+        StatusBar Status;
 
         public VariableTextParser(PaintBox paintBox, StatusBar statusBar)
         {
             this.Canvas = paintBox;
+            this.Status = statusBar;
         }
 
         public void Parse(string input)
         {
 
-            string variableName;
-            string op;
-            int variableAssignment;
+            string variableName = "Test-num";
+            string op = "=";
+            int variableAssignment = 35;
 
             input = input.Trim().ToLower();
 
@@ -54,10 +56,21 @@ namespace Donnatello
                     Console.WriteLine("too many parameters");
                 }
             }
-             
+            //System.Diagnostics.Debug.WriteLine(variableName + " " + op + " " + variableAssignment);
+
+            var varDictionary = new Dictionary<string, int>
+            {
+                [variableName] = variableAssignment
+            };
+
+            foreach(KeyValuePair<string, int> kvp in varDictionary)
+            {
+                System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            }
+
+
 
         }
-
 
     }
 }
