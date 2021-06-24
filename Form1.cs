@@ -26,7 +26,7 @@ namespace Donnatello
             InitializeComponent();
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
             textParser = new TextParser(Canvas, Status);
-            variableTextParser = new VariableTextParser(Canvas, Status);
+            variableTextParser = new VariableTextParser(Canvas, textParser, Status);
             multi = new MultiLineTextParser(Canvas, textParser, variableTextParser);
         }
 

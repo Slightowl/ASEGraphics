@@ -13,11 +13,13 @@ namespace Donnatello
     {
         PaintBox Canvas;
         StatusBar Status;
+        TextParser TextParser;
 
-        public VariableTextParser(PaintBox paintBox, StatusBar statusBar)
+        public VariableTextParser(PaintBox paintBox, TextParser textParser, StatusBar statusBar)
         {
             this.Canvas = paintBox;
             this.Status = statusBar;
+            this.TextParser = textParser;
         }
 
         public void Parse(string input)
@@ -63,14 +65,10 @@ namespace Donnatello
                 [variableName] = variableAssignment
             };
 
-            foreach(KeyValuePair<string, int> kvp in varDictionary)
-            {
-                System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            }
-
-
+            TextParser.ValueConverter(varDictionary);
 
         }
+
 
     }
 }

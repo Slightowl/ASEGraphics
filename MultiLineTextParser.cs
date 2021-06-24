@@ -13,6 +13,7 @@ namespace Donnatello
         VariableTextParser VariableTextParser;
         string eq = "=";
 
+
         /// <summary>Initializes a new instance of the <see cref="MultiLineTextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="textParser">The text parser.</param>
@@ -37,7 +38,7 @@ namespace Donnatello
 
                 if (input.Contains(eq) == true)
                 {
-                    VariableTextParser.Parse(input);
+                    VariableTextParser.Parse(input);           
                 }
                 else
                 {

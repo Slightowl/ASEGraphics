@@ -10,15 +10,28 @@ namespace Donnatello
     public class TextParser
     {
         PaintBox Canvas;
-        VariableTextParser VariableTextParser;
+        Dictionary<string, int> userVariables;
+        int result;
 
         /// <summary>Initializes a new instance of the <see cref="TextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="statusBar">The status bar.</param>
-        public TextParser(PaintBox paintBox, StatusBar statusBar, VariableTextParser variableTextParser)
+        public TextParser(PaintBox paintBox, StatusBar statusBar)
         {
             this.Canvas = paintBox;
-            this.VariableTextParser = variableTextParser;
+        }
+
+        public void ValueConverter(Dictionary<string, int> varDictionary)
+        {
+            userVariables = varDictionary;
+
+
+            foreach(KeyValuePair<string, int> kvp in userVariables)
+            {
+                System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            }
+
+
         }
 
         /// <summary>Parses the specified input.</summary>
@@ -60,8 +73,13 @@ namespace Donnatello
                             
                             assign = param1.ToString();
                         }
+                        else if (userVariables.TryGetValue(inputParams[j], out result))
+                        {
+                            param1 = result;
+                        }
                         else
                         {
+
                             param1 = int.Parse(inputParams[j]);
 
                         }
@@ -85,6 +103,7 @@ namespace Donnatello
                         Console.WriteLine("Parameter 2 Inavlid  (must be an integer): " + e.Message);
                     }
                 }
+                // these params only used for drawing triangles
                 else if (j == 3)
                 {
                     param3 = int.Parse(inputParams[j]);
