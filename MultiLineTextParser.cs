@@ -40,6 +40,10 @@ namespace Donnatello
                 {
                     VariableTextParser.Parse(input);           
                 }
+                else if (input.Contains("while") == true)
+                {
+                    // do something
+                }
                 else
                 {
                     TextParser.Parse(input);

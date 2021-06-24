@@ -15,6 +15,7 @@ namespace Donnatello
         StatusBar Status;
         TextParser TextParser;
         int result;
+        int count;
         Dictionary<string, int> varDictionary = new Dictionary<string, int>();
 
         public VariableTextParser(PaintBox paintBox, TextParser textParser, StatusBar statusBar)
@@ -78,8 +79,6 @@ namespace Donnatello
                     Console.WriteLine("too many parameters");
                 }
             }
-            //System.Diagnostics.Debug.WriteLine(variableName + equalsOp + variableName + additionOp + variableAssignment2);
-
 
             try 
             { 
@@ -92,19 +91,15 @@ namespace Donnatello
 
             if (varDictionary.ContainsKey(variableName))
             {
-
                 varDictionary.TryGetValue(variableName, out result);
-
-                System.Diagnostics.Debug.WriteLine(result + " " + variableAssignment2);
                 int updateValue = result + variableAssignment2;
-                System.Diagnostics.Debug.WriteLine(updateValue + "- update value");
                 varDictionary[variableName] = updateValue;
             }
 
-
             TextParser.ValueConverter(varDictionary);
-
         }
+
+
 
 
     }

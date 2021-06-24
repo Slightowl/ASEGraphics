@@ -34,6 +34,11 @@ namespace Donnatello
 
         }
 
+        public void Looper()
+        {
+
+        }
+
         /// <summary>Parses the specified input.</summary>
         /// <param name="input">The input.</param>
         public void Parse(string input)
