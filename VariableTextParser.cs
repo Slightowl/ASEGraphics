@@ -14,6 +14,8 @@ namespace Donnatello
         PaintBox Canvas;
         StatusBar Status;
         TextParser TextParser;
+        int result;
+        Dictionary<string, int> varDictionary = new Dictionary<string, int>();
 
         public VariableTextParser(PaintBox paintBox, TextParser textParser, StatusBar statusBar)
         {
@@ -26,8 +28,12 @@ namespace Donnatello
         {
 
             string variableName = "Test-num";
-            string op = "=";
-            int variableAssignment = 35;
+            string equalsOp = "=";
+            string additionOp = "+";
+            int variableAssignment = 0;
+            int variableAssignment2 = 0;
+
+
 
             input = input.Trim().ToLower();
 
@@ -41,29 +47,60 @@ namespace Donnatello
                 if (i == 0)
                 {
                     variableName = inputParams[i];
-                    Console.WriteLine(variableName);
                 }
                 else if (i == 1)
                 {
-                    op = inputParams[i];
-                    Console.WriteLine(op);
+                    equalsOp = inputParams[i];
                 }
                 else if (i == 2)
                 {
-                    variableAssignment = Int32.Parse(inputParams[i]);
-                    Console.WriteLine(variableAssignment);
+                    if (varDictionary.ContainsKey(variableName))
+                    {
+                        variableName = inputParams[i];
+                    }
+                    else
+                    {
+                        variableAssignment = Int32.Parse(inputParams[i]);
+                    }
+
+                }
+                else if (i == 3)
+                {
+                    additionOp = inputParams[i];
+                }
+                else if (i == 4)
+                {
+                    System.Diagnostics.Debug.WriteLine(variableAssignment2);
+                    variableAssignment2 = Int32.Parse(inputParams[i]);
                 }
                 else
                 {
                     Console.WriteLine("too many parameters");
                 }
             }
-            //System.Diagnostics.Debug.WriteLine(variableName + " " + op + " " + variableAssignment);
+            //System.Diagnostics.Debug.WriteLine(variableName + equalsOp + variableName + additionOp + variableAssignment2);
 
-            var varDictionary = new Dictionary<string, int>
+
+            try 
+            { 
+                varDictionary.Add(variableName, variableAssignment);
+            }
+            catch (ArgumentException)
             {
-                [variableName] = variableAssignment
-            };
+                System.Diagnostics.Debug.WriteLine(variableName + " - Variable already exists");
+            }
+
+            if (varDictionary.ContainsKey(variableName))
+            {
+
+                varDictionary.TryGetValue(variableName, out result);
+
+                System.Diagnostics.Debug.WriteLine(result + " " + variableAssignment2);
+                int updateValue = result + variableAssignment2;
+                System.Diagnostics.Debug.WriteLine(updateValue + "- update value");
+                varDictionary[variableName] = updateValue;
+            }
+
 
             TextParser.ValueConverter(varDictionary);
 

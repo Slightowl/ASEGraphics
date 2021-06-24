@@ -79,9 +79,7 @@ namespace Donnatello
                         }
                         else
                         {
-
                             param1 = int.Parse(inputParams[j]);
-
                         }
 
                     }
