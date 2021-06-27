@@ -25,18 +25,10 @@ namespace Donnatello
         {
             userVariables = varDictionary;
 
-
-            foreach(KeyValuePair<string, int> kvp in userVariables)
-            {
-                System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            }
-
-
-        }
-
-        public void Looper()
-        {
-
+            //foreach(KeyValuePair<string, int> kvp in userVariables)
+            //{
+            //    System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            //}
         }
 
         /// <summary>Parses the specified input.</summary>

@@ -11,6 +11,12 @@ namespace Donnatello
         PaintBox Canvas;
         TextParser TextParser;
         VariableTextParser VariableTextParser;
+        string loopInput;
+        string loopText;
+        List<string> loopList = new List<string>();
+        bool loopFlag;
+        int loopIterations = 0;
+        int loopCount = 0;
         string eq = "=";
 
 
@@ -33,22 +39,64 @@ namespace Donnatello
                             commands.Split(new string[] { "\r\n" },
                             StringSplitOptions.RemoveEmptyEntries));
 
+            
+          
             foreach (string input in commandList)
             {
+                System.Diagnostics.Debug.WriteLine(input);
 
-                if (input.Contains(eq) == true)
+                if (input.Contains("loop") == true)
                 {
-                    VariableTextParser.Parse(input);           
+                    bool loopFlag = true;
+                    string loopInput = input.Trim().ToLower();
+
+                    List<string> inputParams = new List<string>(
+                                    loopInput.Split(new string[] { ",", " " },
+                                    StringSplitOptions.RemoveEmptyEntries));
+
+
+                    int loopIterations = Int32.Parse(inputParams[2]);
+
+                    foreach (string inputLoop in commandList)
+                    {
+                        if (inputLoop.Contains("end") == true)
+                        {
+                            //string loopText = String.Join("\n", loopList.ToArray());
+                            //System.Diagnostics.Debug.WriteLine(loopText);
+
+                            for (int i = 0; i < loopIterations; i++)
+                            {
+
+
+                                foreach (string j in loopList)
+                                {
+                                    string loopText = j;
+                                    MultiParse(loopText);
+                                }
+                                System.Diagnostics.Debug.WriteLine("loop count: " + i);    
+                            }
+                        }
+                        else
+                        {
+                            if (inputLoop.Contains("loop") == true)
+                            {
+                                System.Diagnostics.Debug.WriteLine("ignore loop command for loopList");
+                            }
+                            else
+                            {
+                                loopList.Add(inputLoop);
+                            }
+                        }
+                    }
                 }
-                else if (input.Contains("while") == true)
+                else if (input.Contains(eq) == true)
                 {
-                    // do something
+                    VariableTextParser.Parse(input);
                 }
                 else
                 {
                     TextParser.Parse(input);
                 }
-                
             }
         }
     }

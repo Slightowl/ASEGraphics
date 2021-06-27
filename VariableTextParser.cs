@@ -95,12 +95,7 @@ namespace Donnatello
                 int updateValue = result + variableAssignment2;
                 varDictionary[variableName] = updateValue;
             }
-
             TextParser.ValueConverter(varDictionary);
         }
-
-
-
-
     }
 }
