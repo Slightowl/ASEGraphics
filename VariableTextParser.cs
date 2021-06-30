@@ -25,6 +25,12 @@ namespace Donnatello
             this.TextParser = textParser;
         }
 
+        public void ifParse()
+        {
+
+        }
+
+
         public void Parse(string input)
         {
 
@@ -71,7 +77,6 @@ namespace Donnatello
                 }
                 else if (i == 4)
                 {
-                    System.Diagnostics.Debug.WriteLine(variableAssignment2);
                     variableAssignment2 = Int32.Parse(inputParams[i]);
                 }
                 else

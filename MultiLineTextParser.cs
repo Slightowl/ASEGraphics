@@ -17,6 +17,8 @@ namespace Donnatello
         bool loopFlag;
         int loopIterations = 0;
         int loopCount = 0;
+        int ifValue = 0;
+        int ifCondition = 0;
         string eq = "=";
 
 
@@ -45,9 +47,12 @@ namespace Donnatello
             {
                 System.Diagnostics.Debug.WriteLine(input);
 
+                //************************//
+                // handle loop statements //
+                //************************//
+                // TODO: needs refactoring put into own class
                 if (input.Contains("loop") == true)
                 {
-                    bool loopFlag = true;
                     string loopInput = input.Trim().ToLower();
 
                     List<string> inputParams = new List<string>(
@@ -61,13 +66,8 @@ namespace Donnatello
                     {
                         if (inputLoop.Contains("end") == true)
                         {
-                            //string loopText = String.Join("\n", loopList.ToArray());
-                            //System.Diagnostics.Debug.WriteLine(loopText);
-
                             for (int i = 0; i < loopIterations; i++)
                             {
-
-
                                 foreach (string j in loopList)
                                 {
                                     string loopText = j;
@@ -88,6 +88,24 @@ namespace Donnatello
                             }
                         }
                     }
+                }
+                //*********************//
+                // handle if statements//
+                //*********************//
+                else if (input.Contains("if") == true)
+                {
+                    string loopInput = input.Trim().ToLower();
+
+                    List<string> inputParams = new List<string>(
+                                    loopInput.Split(new string[] { ",", " " },
+                                    StringSplitOptions.RemoveEmptyEntries));
+
+                    int ifCondition = Int32.Parse(inputParams[2]);
+                    int ifValue = Int32.Parse(inputParams[3]);
+
+
+  
+
                 }
                 else if (input.Contains(eq) == true)
                 {
