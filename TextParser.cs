@@ -9,7 +9,7 @@ namespace Donnatello
 {
     public class TextParser
     {
-        PaintBox Canvas;
+        PaintBox Canvas;                                                                                                                                                                  
         Dictionary<string, int> userVariables;
         int result;
 
@@ -38,6 +38,7 @@ namespace Donnatello
 
             string command = "default";
             string assign = "=";
+            string op;
             int param1 = 0;
             int param2 = 0;
             int param3 = 0;
@@ -67,8 +68,11 @@ namespace Donnatello
                     {
                         if(inputParams[j] == "=")
                         {
-                            
                             assign = param1.ToString();
+                        }
+                        else if (userVariables == null)
+                        {
+                            param1 = int.Parse(inputParams[j]);
                         }
                         else if (userVariables.TryGetValue(inputParams[j], out result))
                         {
@@ -91,7 +95,18 @@ namespace Donnatello
                 {
                     try
                     {
-                        param2 = int.Parse(inputParams[j]);
+                        bool greaterThan = inputParams[j] == ">";
+                        bool lesserThan = inputParams[j] == "<";
+
+                        if (greaterThan | lesserThan)
+                        {
+                            op = inputParams[j];
+                        }
+                        else
+                        {
+                            param2 = int.Parse(inputParams[j]);
+                        }
+                        
                     }
                     catch (FormatException e)
                     {
@@ -119,7 +134,7 @@ namespace Donnatello
                 {
                     //StatusBar.Text = "Error: Either Invalid Command or Parameter";
                 }
-                Console.WriteLine(command + " " + assign + " " + param1);
+                //Console.WriteLine(command + " " + assign + " " + param1);
             }
             try
             {
@@ -132,7 +147,7 @@ namespace Donnatello
 
                 else if (command.Equals(command + " " + assign + " " + param2))
                 {
-                    Console.WriteLine(command + " " + assign + param2);
+                    //Console.WriteLine(command + " " + assign + param2);
                 }
 
                 else if (command.Equals("penred") == true)

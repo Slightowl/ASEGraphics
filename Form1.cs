@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 namespace Donnatello
 {
-   
     public partial class Donnatello : Form
     {
         static int ScreenSizeY = 640;
@@ -15,6 +14,9 @@ namespace Donnatello
         TextParser textParser;
         VariableTextParser variableTextParser;
         MultiLineTextParser multi;
+        MethodParser MethodParser;
+        Looper Looper;
+        ifElseParser ifElseParser;
         PaintBox Canvas;
         StatusBar Status;
 
@@ -26,8 +28,10 @@ namespace Donnatello
             InitializeComponent();
             Canvas = new PaintBox(Graphics.FromImage(OutPutBitmap));
             textParser = new TextParser(Canvas, Status);
-            variableTextParser = new VariableTextParser(Canvas, textParser, Status);
-            multi = new MultiLineTextParser(Canvas, textParser, variableTextParser);
+            variableTextParser = new VariableTextParser(Canvas, textParser, multi);
+            multi = new MultiLineTextParser(Canvas, textParser, variableTextParser, MethodParser, Looper, ifElseParser);
+            MethodParser = new MethodParser(Canvas, textParser, multi);
+            ifElseParser = new ifElseParser(Canvas, textParser, multi);
         }
 
         /// method handles commandline inputs
@@ -36,12 +40,10 @@ namespace Donnatello
         /// <param name="e">The <see cref="KeyEventArgs" /> instance containing the event data.</param>
         public void CommandLine_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.KeyCode == Keys.Enter)
             {
                 String input = CommandLine.Text.Trim().ToLower();
                 String commands = MultiCommand.Text.Trim().ToLower();
-
 
                 if (input.Equals("run") == true)
                 {
@@ -49,7 +51,6 @@ namespace Donnatello
                     StatusBar.Text = "string";
                     
                 }
-
                 else if (input.Equals("saveprogram") == true)
                 {
                     SaveFileDialog newProgram = new SaveFileDialog();
@@ -110,11 +111,12 @@ namespace Donnatello
         {
             // get graphics context of form (displayed)
             Graphics g = e.Graphics;
-            g.DrawImageUnscaled(OutPutBitmap, 0, 0);
-            
-            
+            g.DrawImageUnscaled(OutPutBitmap, 0, 0);   
         }
 
-        
+        private void PaintBox_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

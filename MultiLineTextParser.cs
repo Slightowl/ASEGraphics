@@ -11,48 +11,128 @@ namespace Donnatello
         PaintBox Canvas;
         TextParser TextParser;
         VariableTextParser VariableTextParser;
-        string loopInput;
-        string loopText;
+        MethodParser MethodParser;
+        MultiLineTextParser multiLineTextParser;
+        Looper Looper;
+        ifElseParser ifElseParser;
+
+        Dictionary<string, int> storedVariables = new Dictionary<string, int>();
+        Dictionary<string, List<string>> storedMethod = new Dictionary<string, List<string>>();
+
+
+        List<string> commandList = new List<string>();
+        List<string> mList = new List<string>();
+        List<string> mResult = new List<string>();
         List<string> loopList = new List<string>();
+
         bool loopFlag;
         int loopIterations = 0;
         int loopCount = 0;
-        int ifValue = 0;
-        int ifCondition = 0;
+
+        string methodCall = "method";
         string eq = "=";
+
 
 
         /// <summary>Initializes a new instance of the <see cref="MultiLineTextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
         /// <param name="textParser">The text parser.</param>
-        public MultiLineTextParser(PaintBox paintBox, TextParser textParser, VariableTextParser variableTextParser)
+        public MultiLineTextParser(PaintBox paintBox, TextParser textParser, VariableTextParser variableTextParser, 
+            MethodParser methodParser, Looper looper, ifElseParser ifElseParser)
         {
             this.Canvas = paintBox;
             this.TextParser = textParser;
             this.VariableTextParser = variableTextParser;
+            this.MethodParser = methodParser;
+            this.Looper = looper;
+            this.ifElseParser = ifElseParser;
+        }
+
+        public void ValueConverter(Dictionary<string, int> varDictionary)
+        {
+            storedVariables = varDictionary;
+        }
+
+        public void MethodList(List<string> methodList)
+        {
+            mList = methodList;
+            methodCall = mList.FirstOrDefault();
+            System.Diagnostics.Debug.WriteLine(methodCall);
+            mList.RemoveAt(0);
+
+            foreach (string item in mList)
+            {
+                System.Diagnostics.Debug.WriteLine(item);
+            }
+            try
+            {
+                storedMethod.Add(methodCall, mList);
+            }
+            catch (ArgumentException)
+            {
+                System.Diagnostics.Debug.WriteLine(methodCall + " - Variable already exists");
+            }
+            foreach (KeyValuePair<string, List<string>> kvp in storedMethod)
+            {
+                 System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
+            }
+                commandList.Clear();
         }
 
         /// <summary>Multis the parse.</summary>
         /// <param name="commands">The commands.</param>
         public void MultiParse(string commands)
         {
-
             List<string> commandList = new List<string>(
                             commands.Split(new string[] { "\r\n" },
                             StringSplitOptions.RemoveEmptyEntries));
 
-            
-          
             foreach (string input in commandList)
             {
-                System.Diagnostics.Debug.WriteLine(input);
+                //##############//
+                //***METHODS****//
+                //##############//
+                if (input.Contains("()") == true)
+                {
+                    for (int i = 0; i < commandList.Count; i++)
+                    {
+                        string methodInput = commandList[i];
+                        if (MethodParser == null)
+                        {
+                            MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
+                            MethodParser.MethodParse(methodInput);
+                        }
+                        else
+                        {
+                            MethodParser.MethodParse(methodInput);
+                        }
+                    }
+                }
+                
+                else if (input.Contains(methodCall) == true)
+                {
+                    storedMethod.TryGetValue(methodCall, out mResult);
+                    System.Diagnostics.Debug.WriteLine(mResult);
 
+                    for (int i = 1; i < mResult.Count; i++)
+                    {
+                        MultiParse(mResult[i]);
+                    }
+                }
                 //************************//
                 // handle loop statements //
                 //************************//
-                // TODO: needs refactoring put into own class
-                if (input.Contains("loop") == true)
+                else if (input.Contains("loop") == true)
                 {
+                    //if (Looper == null)
+                        //{
+                        //    Looper = new Looper(Canvas, TextParser, multiLineTextParser);
+                        //    Looper.commandParse(commandList);
+                        //}
+                        //else
+                        //{
+                        //    Looper.commandParse(commandList);
+                        //}
                     string loopInput = input.Trim().ToLower();
 
                     List<string> inputParams = new List<string>(
@@ -73,7 +153,7 @@ namespace Donnatello
                                     string loopText = j;
                                     MultiParse(loopText);
                                 }
-                                System.Diagnostics.Debug.WriteLine("loop count: " + i);    
+                                System.Diagnostics.Debug.WriteLine("loop count: " + i);
                             }
                         }
                         else
@@ -89,27 +169,38 @@ namespace Donnatello
                         }
                     }
                 }
+
                 //*********************//
                 // handle if statements//
                 //*********************//
                 else if (input.Contains("if") == true)
                 {
-                    string loopInput = input.Trim().ToLower();
-
-                    List<string> inputParams = new List<string>(
-                                    loopInput.Split(new string[] { ",", " " },
-                                    StringSplitOptions.RemoveEmptyEntries));
-
-                    int ifCondition = Int32.Parse(inputParams[2]);
-                    int ifValue = Int32.Parse(inputParams[3]);
-
-
-  
-
+                    if (ifElseParser == null)
+                    {
+                        ifElseParser = new ifElseParser(Canvas, TextParser, multiLineTextParser);
+                        ifElseParser.ifParser(commandList);
+                    }
+                    else
+                    {
+                        ifElseParser.ifParser(commandList);
+                    }
+                    break;
                 }
+                //*********************//
+                //  handle variables   //
+                //*********************//
                 else if (input.Contains(eq) == true)
                 {
-                    VariableTextParser.Parse(input);
+                    if (VariableTextParser == null)
+                    {
+                        VariableTextParser = new VariableTextParser(Canvas, TextParser, multiLineTextParser);
+                        VariableTextParser.Parse(input);
+                    }
+                    else
+                    {
+                        VariableTextParser.Parse(input);
+
+                    }
                 }
                 else
                 {

@@ -12,35 +12,33 @@ namespace Donnatello
     public class VariableTextParser
     {
         PaintBox Canvas;
-        StatusBar Status;
+        //StatusBar Status;
+        VariableTextParser variableTextParser;
         TextParser TextParser;
+        MultiLineTextParser MultiLineTextParser;
+        MethodParser MethodParser;
+        Looper Looper;
+        ifElseParser ifElseParser;
+
         int result;
         int count;
         Dictionary<string, int> varDictionary = new Dictionary<string, int>();
 
-        public VariableTextParser(PaintBox paintBox, TextParser textParser, StatusBar statusBar)
+        public VariableTextParser(PaintBox paintBox, TextParser textParser, MultiLineTextParser multi)
         {
             this.Canvas = paintBox;
-            this.Status = statusBar;
+            //this.Status = statusBar;
             this.TextParser = textParser;
+            this.MultiLineTextParser = multi;
         }
-
-        public void ifParse()
-        {
-
-        }
-
 
         public void Parse(string input)
         {
-
             string variableName = "Test-num";
             string equalsOp = "=";
             string additionOp = "+";
             int variableAssignment = 0;
             int variableAssignment2 = 0;
-
-
 
             input = input.Trim().ToLower();
 
@@ -100,6 +98,17 @@ namespace Donnatello
                 int updateValue = result + variableAssignment2;
                 varDictionary[variableName] = updateValue;
             }
+
+            if (MultiLineTextParser == null)
+            {
+                MultiLineTextParser = new MultiLineTextParser(Canvas, TextParser, variableTextParser, MethodParser, Looper, ifElseParser);
+                MultiLineTextParser.ValueConverter(varDictionary);
+            }
+            else
+            {
+                MultiLineTextParser.ValueConverter(varDictionary);
+            }
+
             TextParser.ValueConverter(varDictionary);
         }
     }
