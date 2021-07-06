@@ -27,35 +27,46 @@ namespace Donnatello
             this.MultiLineTextParser = multi;
         }
 
-        public void MethodParse(string inputs)
+        public void MethodSetter(List<string> commandList)
         {
-            if (inputs.Contains("()") == true)
-            {
-                try
-                {
-                    string modifiedInput = Regex.Replace(inputs, @"[^0-9a-zA-Z]+", "", RegexOptions.None, TimeSpan.FromSeconds(0.5));
-                    methodList.Add(modifiedInput);
+            int methodCounter = 0;
 
-                    if (MultiLineTextParser == null)
-                    {
-                        MultiLineTextParser = new MultiLineTextParser(Canvas, TextParser, variableTextParser, methodParser, Looper, ifElseParser);
-                        MultiLineTextParser.MethodList(methodList);
-                    }
-                    else
-                    {
-                        MultiLineTextParser.MethodList(methodList);
-                    }
-                }
-                catch (RegexMatchTimeoutException)
-                {
-                    System.Diagnostics.Debug.WriteLine("Regex failed");
-                }
+            string methodCall = Regex.Replace(commandList[0], @"\(([^\)]+)\)", "", RegexOptions.None, TimeSpan.FromSeconds(0.5));
+            string parameters = Regex.Match(commandList[0], @"\(([^)]*)\)").Groups[1].Value;
+
+            if (MultiLineTextParser == null)
+            {
+                MultiLineTextParser = new MultiLineTextParser(Canvas, TextParser, variableTextParser, methodParser, Looper, ifElseParser);
+                MultiLineTextParser.MethodList(methodCall);
             }
             else
             {
-                methodList.Add(inputs);
-                MultiLineTextParser.MethodList(methodList);
+                MultiLineTextParser.MethodList(methodCall);
+            }
+
+            for (int i = 0; i < commandList.Count; i++)
+            {
+                if (commandList[i].Contains(methodCall))
+                {
+                    methodCounter = i;
+                }
+            }
+
+            for(int i = 0; i < commandList.Count; i++)
+            {
+                if (i > methodCounter)
+                {
+                    methodList.Add(commandList[i]);
+                }
             }
         }
+        public void MethodExecute()
+        {
+            foreach(string command in methodList)
+            {
+                MultiLineTextParser.MultiParse(command);
+            }
+        }
+            
     }
 }

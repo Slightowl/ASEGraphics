@@ -29,7 +29,7 @@ namespace Donnatello
         int loopIterations = 0;
         int loopCount = 0;
 
-        string methodCall = "method";
+        string methodCall = "";
         string eq = "=";
 
 
@@ -53,30 +53,9 @@ namespace Donnatello
             storedVariables = varDictionary;
         }
 
-        public void MethodList(List<string> methodList)
+        public void MethodList(string method)
         {
-            mList = methodList;
-            methodCall = mList.FirstOrDefault();
-            System.Diagnostics.Debug.WriteLine(methodCall);
-            mList.RemoveAt(0);
-
-            foreach (string item in mList)
-            {
-                System.Diagnostics.Debug.WriteLine(item);
-            }
-            try
-            {
-                storedMethod.Add(methodCall, mList);
-            }
-            catch (ArgumentException)
-            {
-                System.Diagnostics.Debug.WriteLine(methodCall + " - Variable already exists");
-            }
-            foreach (KeyValuePair<string, List<string>> kvp in storedMethod)
-            {
-                 System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            }
-                commandList.Clear();
+            methodCall = method;
         }
 
         /// <summary>Multis the parse.</summary>
@@ -92,33 +71,25 @@ namespace Donnatello
                 //##############//
                 //***METHODS****//
                 //##############//
-                if (input.Contains("()") == true)
+                if (input.Contains("(") == true)
                 {
-                    for (int i = 0; i < commandList.Count; i++)
+                    if (MethodParser == null)
                     {
-                        string methodInput = commandList[i];
-                        if (MethodParser == null)
-                        {
-                            MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
-                            MethodParser.MethodParse(methodInput);
-                        }
-                        else
-                        {
-                            MethodParser.MethodParse(methodInput);
-                        }
+                        MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
+                        MethodParser.MethodSetter(commandList);
                     }
+                    else
+                    {
+                        MethodParser.MethodSetter(commandList);
+                    }
+                    break;
+                }
+                else if (input.Contains(methodCall))
+                {
+                    MethodParser.MethodExecute();
                 }
                 
-                else if (input.Contains(methodCall) == true)
-                {
-                    storedMethod.TryGetValue(methodCall, out mResult);
-                    System.Diagnostics.Debug.WriteLine(mResult);
-
-                    for (int i = 1; i < mResult.Count; i++)
-                    {
-                        MultiParse(mResult[i]);
-                    }
-                }
+               
                 //************************//
                 // handle loop statements //
                 //************************//
