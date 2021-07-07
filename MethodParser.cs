@@ -31,8 +31,10 @@ namespace Donnatello
         {
             int methodCounter = 0;
 
-            string methodCall = Regex.Replace(commandList[0], @"\(([^\)]+)\)", "", RegexOptions.None, TimeSpan.FromSeconds(0.5));
+            string methodCall = Regex.Replace(commandList[0], @"\(.*$", "", RegexOptions.None, TimeSpan.FromSeconds(0.5));
             string parameters = Regex.Match(commandList[0], @"\(([^)]*)\)").Groups[1].Value;
+
+            System.Diagnostics.Debug.WriteLine(methodCall);
 
             if (MultiLineTextParser == null)
             {

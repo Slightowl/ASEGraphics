@@ -81,12 +81,20 @@ namespace Donnatello
                     else
                     {
                         MethodParser.MethodSetter(commandList);
-                    }
+                    }      
                     break;
                 }
-                else if (input.Contains(methodCall))
+                else if (input.Contains(methodCall + "()") == true)
                 {
-                    MethodParser.MethodExecute();
+                    if (MethodParser == null)
+                    {
+                        MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
+                        MethodParser.MethodExecute();
+                    }
+                    else
+                    {
+                        MethodParser.MethodExecute();
+                    }
                 }
                 
                
