@@ -19,6 +19,7 @@ namespace Donnatello
         ifElseParser ifElseParser;
         PaintBox Canvas;
         StatusBar Status;
+        SyntaxChecker SyntaxChecker;
 
         Bitmap OutPutBitmap = new Bitmap(ScreenSizeY, ScreenSizeX);
 
@@ -32,6 +33,7 @@ namespace Donnatello
             multi = new MultiLineTextParser(Canvas, textParser, variableTextParser, MethodParser, Looper, ifElseParser);
             MethodParser = new MethodParser(Canvas, textParser, multi);
             ifElseParser = new ifElseParser(Canvas, textParser, multi);
+            SyntaxChecker = new SyntaxChecker(Canvas, textParser, multi);
         }
 
         /// method handles commandline inputs
@@ -47,6 +49,7 @@ namespace Donnatello
 
                 if (input.Equals("run") == true)
                 {
+                    SyntaxChecker.SyntaxParse(commands);
                     multi.MultiParse(commands);
                     StatusBar.Text = "string";
                     
