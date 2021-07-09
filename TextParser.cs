@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace Donnatello
 {
     public class TextParser
     {
-        PaintBox Canvas;                                                                                                                                                                  
+        PaintBox Canvas;
         Dictionary<string, int> userVariables;
         int result;
 
@@ -55,33 +56,26 @@ namespace Donnatello
             {
                 if (j == 0)
                 {
-                        command = inputParams[j];
+                    command = inputParams[j];   
+                    System.Diagnostics.Debug.WriteLine(command);
                 }
                 else if (j == 1)
-                {
-                    try
+                {            
+                    if (inputParams[j] == "=")
                     {
-                        if(inputParams[j] == "=")
-                        {
-                            assign = param1.ToString();
-                        }
-                        else if (userVariables == null)
-                        {
-                            param1 = int.Parse(inputParams[j]);
-                        }
-                        else if (userVariables.TryGetValue(inputParams[j], out result))
-                        {
-                            param1 = result;
-                        }
-                        else
-                        {
-                            param1 = int.Parse(inputParams[j]);
-                        }
-
+                        assign = param1.ToString();
                     }
-                    catch (FormatException e)
+                    else if (userVariables == null)
                     {
-                        Console.WriteLine("Parameter 1 Inavlid (must be an integer): " + e.Message);
+                        param1 = int.Parse(inputParams[j]);
+                    }
+                    else if (userVariables.TryGetValue(inputParams[j], out result))
+                    {
+                        param1 = result;
+                    }
+                    else
+                    {
+                        param1 = int.Parse(inputParams[j]);
                     }
                 }
                 else if (j == 2)
@@ -214,15 +208,20 @@ namespace Donnatello
                 {
                     Canvas.Reset(0, 0);
                 }
+                else if (command.Equals("end") == true)
+                {
+                    Console.WriteLine("loop end");
+                }
                 else
                 {
+                    throw new NotAStringException();
                     Console.WriteLine("Invalid command: Needs to be a valid command");
                 }
 
             }
-            catch (ArgumentException e)
+            catch (NotAStringException e)
             {
-                Console.WriteLine("Command was invalid, please enter a valid command. Error: " + e.Message);
+                e.StringException();
             }
         }
     }

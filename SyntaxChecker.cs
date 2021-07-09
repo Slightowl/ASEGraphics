@@ -8,7 +8,7 @@ namespace Donnatello
 
         string[] availableCmds = new string[] { "circle" };
         int lineCount = 0;
-        Dictionary<string, int> varDictionary = new Dictionary<string, int>();
+        List<string> synList = new List<string>();
 
         public SyntaxChecker(PaintBox paintBox, TextParser textParser, MultiLineTextParser multi)
         {
@@ -60,7 +60,8 @@ namespace Donnatello
                         else
                         {
                             string updater = "spelling error on line: " + lineCount + " at space 1";
-                            System.Windows.Forms.MessageBox.Show(updater);
+                            synList.Add(updater);
+                            //System.Windows.Forms.MessageBox.Show(updater);
                         }
                     }
                 }
@@ -77,10 +78,19 @@ namespace Donnatello
                     else
                     {
                         string updater2 = "Error with integer on line " + lineCount + " at space 2";
-                        System.Windows.Forms.MessageBox.Show(updater2);
+                        synList.Add(updater2);
+                        //System.Windows.Forms.MessageBox.Show(updater2);
                     }
                 }
             }
+            messageProvider(synList);
+        }
+
+        public void messageProvider(List<string> vs)
+        {      
+            string delimiter = "\n\r";
+            string concList = String.Join(delimiter, vs);
+            System.Windows.Forms.MessageBox.Show(concList);  
         }
     }
 }

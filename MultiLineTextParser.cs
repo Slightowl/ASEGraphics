@@ -22,7 +22,6 @@ namespace Donnatello
         bool loopFlag;
         int loopIterations = 0;
         int loopCount = 0;
-
         string methodCall = "";
         string eq = "=";
 
@@ -54,8 +53,8 @@ namespace Donnatello
             methodCall = method;
         }
 
-        /// <summary>Multis the parse.</summary>
-        /// <param name="commands">The commands.</param>
+        /// <summary>Parses a string sent from Form class - richTextBox</summary>
+        /// <param name="commands">string containing commands</param>
         public void MultiParse(string commands)
         {
             List<string> commandList = new List<string>(

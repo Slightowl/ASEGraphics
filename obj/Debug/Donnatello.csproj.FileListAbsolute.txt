@@ -28,3 +28,13 @@ C:\Users\sligh\Source\Repos\ASEGraphics2\bin\Debug\Donnatello.exe.config
 C:\Users\sligh\Source\Repos\ASEGraphics2\bin\Debug\Donnatello.exe
 C:\Users\sligh\Source\Repos\ASEGraphics2\bin\Debug\Donnatello.pdb
 C:\Users\sligh\Source\Repos\ASEGraphics2\obj\Debug\Donnatello.csprojAssemblyReference.cache
+C:\Users\sligh\source\repos\ASEGraphics4\bin\Debug\Donnatello.exe.config
+C:\Users\sligh\source\repos\ASEGraphics4\bin\Debug\Donnatello.exe
+C:\Users\sligh\source\repos\ASEGraphics4\bin\Debug\Donnatello.pdb
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.csprojAssemblyReference.cache
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.Donnatello.resources
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.Properties.Resources.resources
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.csproj.GenerateResource.cache
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.csproj.CoreCompileInputs.cache
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.exe
+C:\Users\sligh\source\repos\ASEGraphics4\obj\Debug\Donnatello.pdb

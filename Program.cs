@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Donnatello
-{
+{    
+    /// <summary>
+    /// Main entry point of program.
+    /// By Samuel Lightowler 2021.
+    /// </summary>
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+      
         [STAThread]
         static void Main()
         {

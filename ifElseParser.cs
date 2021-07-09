@@ -54,8 +54,8 @@ namespace Donnatello
 
         }
 
-        /// <summary>Ifs the parser.</summary>
-        /// <param name="commandList">Parses if / else statements from list</param>
+        /// <summary>Parses list of commands</summary>
+        /// <param name="commandList">List of commands to be parsed</param>
         public void ifParser(List<string> commandList)
         {
             //ifElseParam = int.Parse(result);
@@ -172,10 +172,10 @@ namespace Donnatello
         }
 
         /// <summary>Logic to decide whether if or else</summary>
-        /// <param name="ifVal">If value</param>
-        /// <param name="ifVal2">If val2</param>
-        /// <param name="elseVal">The else value</param>
-        /// <param name="elseVal2">The else val2</param>
+        /// <param name="ifVal">If value - int to be compared</param>
+        /// <param name="ifVal2">If val2 - int to be compared</param>
+        /// <param name="elseVal">Elsevalue - int to be compared</param>
+        /// <param name="elseVal2">Elsevalue2 - int to be compared</param>
         public void ifElseDecider(int ifVal, int ifVal2, int elseVal, int elseVal2)
         {
             System.Diagnostics.Debug.WriteLine(ifVal + " " + ifVal2 + " " + elseVal + " " + elseVal2);
