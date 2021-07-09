@@ -79,7 +79,11 @@ namespace Donnatello
                         MethodParser.MethodExecute();
                     }
                 }
+<<<<<<< HEAD
                 else if (input.Contains("(") == true)
+=======
+                else if (input.Contains(methodCall + "()") == true)
+>>>>>>> c4f5aae87c7d113f22b2d090650b84f374613ee5
                 {
                     
                     if (MethodParser == null)

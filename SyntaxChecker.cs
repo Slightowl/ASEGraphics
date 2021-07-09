@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Donnatello
 {
-    class SyntaxChecker
+    class SyntaxChecker : Donnatello
     {
 
         string[] availableCmds = new string[] { "circle" };
@@ -59,8 +59,13 @@ namespace Donnatello
                         }
                         else
                         {
+<<<<<<< HEAD
                             string updater = "spelling error on line: " + lineCount + " at space 1";
                             System.Windows.Forms.MessageBox.Show(updater);
+=======
+                            System.Diagnostics.Debug.WriteLine("spelling error on line: " + lineCount + " at space 1");
+                            //StatusBar.Text("spelling error on line: " + lineCount + " at space 1");
+>>>>>>> c4f5aae87c7d113f22b2d090650b84f374613ee5
                         }
                     }
                 }
