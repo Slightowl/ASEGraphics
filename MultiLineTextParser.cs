@@ -17,12 +17,6 @@ namespace Donnatello
         ifElseParser ifElseParser;
 
         Dictionary<string, int> storedVariables = new Dictionary<string, int>();
-        Dictionary<string, List<string>> storedMethod = new Dictionary<string, List<string>>();
-
-
-        List<string> commandList = new List<string>();
-        List<string> mList = new List<string>();
-        List<string> mResult = new List<string>();
         List<string> loopList = new List<string>();
 
         bool loopFlag;
@@ -31,8 +25,6 @@ namespace Donnatello
 
         string methodCall = "";
         string eq = "=";
-
-
 
         /// <summary>Initializes a new instance of the <see cref="MultiLineTextParser" /> class.</summary>
         /// <param name="paintBox">The paint box.</param>
@@ -48,11 +40,15 @@ namespace Donnatello
             this.ifElseParser = ifElseParser;
         }
 
+        /// <summary>Transfers dictionary data</summary>
+        /// <param name="varDictionary">User defined key value pair</param>
         public void ValueConverter(Dictionary<string, int> varDictionary)
         {
             storedVariables = varDictionary;
         }
 
+        /// <summary>Methods the list.</summary>
+        /// <param name="method">Passes method name into class</param>
         public void MethodList(string method)
         {
             methodCall = method;
@@ -71,8 +67,21 @@ namespace Donnatello
                 //##############//
                 //***METHODS****//
                 //##############//
-                if (input.Contains("(") == true)
+                if (input.Contains(methodCall + "()") == true)
                 {
+                    if (MethodParser == null)
+                    {
+                        MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
+                        MethodParser.MethodExecute();
+                    }
+                    else
+                    {
+                        MethodParser.MethodExecute();
+                    }
+                }
+                else if (input.Contains("(") == true)
+                {
+                    
                     if (MethodParser == null)
                     {
                         MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
@@ -81,41 +90,15 @@ namespace Donnatello
                     else
                     {
                         MethodParser.MethodSetter(commandList);
-                    }      
+                    }
                     break;
                 }
-<<<<<<< HEAD
-                else if (input.Contains(methodCall + "()") == true)
-=======
-                else if (input.Contains(methodCall + "()"))
->>>>>>> 5a722e4c615cfe80dc5053457e161bf180f72a09
-                {
-                    if (MethodParser == null)
-                    {
-                        MethodParser = new MethodParser(Canvas, TextParser, multiLineTextParser);
-                        MethodParser.MethodExecute();
-                    }
-                    else
-                    {
-                        MethodParser.MethodExecute();
-                    }
-                }
                 
-               
                 //************************//
                 // handle loop statements //
                 //************************//
                 else if (input.Contains("loop") == true)
                 {
-                    //if (Looper == null)
-                        //{
-                        //    Looper = new Looper(Canvas, TextParser, multiLineTextParser);
-                        //    Looper.commandParse(commandList);
-                        //}
-                        //else
-                        //{
-                        //    Looper.commandParse(commandList);
-                        //}
                     string loopInput = input.Trim().ToLower();
 
                     List<string> inputParams = new List<string>(

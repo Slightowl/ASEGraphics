@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Donnatello
 {
@@ -16,15 +17,22 @@ namespace Donnatello
         Looper Looper;
         ifElseParser IfElseParser;
 
-        int result;
+        string result = "";
         int result2;
         int elseCounter = 0;
         int ifCounter = 0;
+        int ifVal = 0;
+        string ifCondition;
+        int ifVal2 = 0;
+        int elseVal = 0;
+        string elseCondition;
+        int elseVal2 = 0;
+        int ifElseParam = 0;
 
         List<string> commandList = new List<string>();
         List<string> ifList = new List<string>();
         List<string> elseList = new List<string>();
-        Dictionary<string, int> userVariables = new Dictionary<string, int>();
+        Dictionary<string, int> userVariables;
 
 
         public ifElseParser(PaintBox paintBox, TextParser textParser, MultiLineTextParser multi)
@@ -34,19 +42,23 @@ namespace Donnatello
             this.MultiLineTextParser = multi;
         }
 
-        public void ValueConverter(Dictionary<string, int> varDictionary)
+        /// <summary>Values the converter.</summary>
+        /// <param name="varDictionary">
+        ///   <para>
+        /// Passes key value pairs into class</para>
+        /// </param>
+        public void ValueConverter(string value)
         {
-            userVariables = varDictionary;
+            result = value;
+            System.Diagnostics.Debug.WriteLine(result);
+
         }
 
+        /// <summary>Ifs the parser.</summary>
+        /// <param name="commandList">Parses if / else statements from list</param>
         public void ifParser(List<string> commandList)
         {
-            int ifVal = 0;
-            string ifCondition;
-            int ifVal2 = 0;
-            int elseVal = 0;
-            string elseCondition;
-            int elseVal2 = 0;
+            //ifElseParam = int.Parse(result);
 
             for (int i = 0; i < commandList.Count; i++)
             {
@@ -60,23 +72,20 @@ namespace Donnatello
                 }
                 else
                 {
-                    
+                    // do nothing
                 } 
             }
             for (int i = 0; i < commandList.Count; i++)
             {
-                System.Diagnostics.Debug.WriteLine("loopcounter: " + i);
                 if (i >= ifCounter && i < elseCounter)
                 {
                     ifList.Add(commandList[i]);
                 }
                 else if (i > elseCounter && i <= commandList.Count)
                 {
-                    System.Diagnostics.Debug.WriteLine("command: " + commandList[i] + "counter: " + i);
                     elseList.Add(commandList[i]);
                 }
             }
-            
 
             foreach (string inputs in commandList)
             {
@@ -90,14 +99,19 @@ namespace Donnatello
                     {
                         if (i == 1)
                         {
-                            if (userVariables.TryGetValue(ifParams[i], out result))
+                            int testNum = 0;
+                            string ifParam = ifParams[i];
+                            bool isNum = int.TryParse(ifParam, out testNum);
+
+                            if (isNum == true)
                             {
-                                ifVal = result;
+                                ifVal = int.Parse(ifParam);
                             }
                             else
                             {
-                                ifVal = int.Parse(ifParams[i]);
+                                ifVal = ifElseParam;
                             }
+
                         }
                         else if (i == 2)
                         {
@@ -119,13 +133,18 @@ namespace Donnatello
                     {
                         if (i == 1)
                         {
-                            if (userVariables.TryGetValue(ifParams[i], out result2))
+
+                            int testNum = 0;
+                            string ifParam = ifParams[i];
+                            bool isNum = int.TryParse(ifParam, out testNum);
+
+                            if (isNum == true)
                             {
-                                elseVal = result2;
+                                elseVal = int.Parse(ifParam);
                             }
                             else
                             {
-                                elseVal = int.Parse(ifParams[i]);
+                                elseVal = ifElseParam;
                             }
                         }
                         else if (i == 2)
@@ -136,7 +155,6 @@ namespace Donnatello
                         {
                             elseVal2 = int.Parse(ifParams[i]);
                             System.Diagnostics.Debug.WriteLine(elseVal2);
-
                         }
                         else
                         {
@@ -153,8 +171,14 @@ namespace Donnatello
             ifElseDecider(ifVal, ifVal2, elseVal, elseVal2);
         }
 
+        /// <summary>Logic to decide whether if or else</summary>
+        /// <param name="ifVal">If value</param>
+        /// <param name="ifVal2">If val2</param>
+        /// <param name="elseVal">The else value</param>
+        /// <param name="elseVal2">The else val2</param>
         public void ifElseDecider(int ifVal, int ifVal2, int elseVal, int elseVal2)
         {
+            System.Diagnostics.Debug.WriteLine(ifVal + " " + ifVal2 + " " + elseVal + " " + elseVal2);
             if (ifVal > ifVal2)
             {
                 System.Diagnostics.Debug.WriteLine("if statement executing...");
@@ -179,6 +203,8 @@ namespace Donnatello
             }
         }
 
+        /// <summary>Ifs the else execution.</summary>
+        /// <param name="ifExe">Passes commands to multiparser</param>
         public void ifElseExecution(List<string> ifExe)
         {
             foreach(string command in ifExe)

@@ -24,11 +24,6 @@ namespace Donnatello
         public void ValueConverter(Dictionary<string, int> varDictionary)
         {
             userVariables = varDictionary;
-
-            //foreach(KeyValuePair<string, int> kvp in userVariables)
-            //{
-            //    System.Diagnostics.Debug.WriteLine("Key = {0}, Value = {1}", kvp.Key, kvp.Value);
-            //}
         }
 
         /// <summary>Parses the specified input.</summary>
@@ -86,8 +81,6 @@ namespace Donnatello
                     }
                     catch (FormatException e)
                     {
-                        //StatusBar.Text = "Invalid parameter (must be an integer): " + e.Message;
-
                         Console.WriteLine("Parameter 1 Inavlid (must be an integer): " + e.Message);
                     }
                 }
@@ -101,6 +94,14 @@ namespace Donnatello
                         if (greaterThan | lesserThan)
                         {
                             op = inputParams[j];
+                        }
+                        else if (userVariables == null)
+                        {
+                            param2 = int.Parse(inputParams[j]);
+                        }
+                        else if (userVariables.TryGetValue(inputParams[j], out result))
+                        {
+                            param2 = result;
                         }
                         else
                         {

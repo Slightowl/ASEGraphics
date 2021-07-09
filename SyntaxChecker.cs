@@ -1,35 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Donnatello
 {
     class SyntaxChecker
     {
 
-        PaintBox Canvas;
-        //StatusBar Status;
-        VariableTextParser variableTextParser;
-        TextParser TextParser;
-        MultiLineTextParser MultiLineTextParser;
-        MethodParser MethodParser;
-        Looper Looper;
-        ifElseParser ifElseParser;
-
-        string[] availableCmds = new string[] {"circle"};
+        string[] availableCmds = new string[] { "circle" };
         int lineCount = 0;
-        int commandCount = 0;
         Dictionary<string, int> varDictionary = new Dictionary<string, int>();
 
         public SyntaxChecker(PaintBox paintBox, TextParser textParser, MultiLineTextParser multi)
         {
-            this.Canvas = paintBox;
-            this.TextParser = textParser;
-            this.MultiLineTextParser = multi;
+
         }
 
+        /// <summary>parses commands.</summary>
+        /// <param name="commands">
+        ///   <para>
+        /// string list of commands</para>
+        /// </param>
         public void SyntaxParse(string commands)
         {
 
@@ -44,6 +34,11 @@ namespace Donnatello
             }
         }
 
+        /// <summary>
+        ///   <para>
+        /// Does some logic to locate errors</para>
+        /// </summary>
+        /// <param name="input">The input.</param>
         public void SynChecker(string input)
         {
             input = input.Trim().ToLower();
@@ -52,7 +47,7 @@ namespace Donnatello
                             input.Split(new string[] { ",", " " },
                             StringSplitOptions.RemoveEmptyEntries));
 
-            for(int i = 0; i < inputParams.Count; i++)
+            for (int i = 0; i < inputParams.Count; i++)
             {
                 if (i % 2 == 0)
                 {
@@ -64,7 +59,8 @@ namespace Donnatello
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("spelling error on line: " + lineCount + " at space 1"); 
+                            string updater = "spelling error on line: " + lineCount + " at space 1";
+                            System.Windows.Forms.MessageBox.Show(updater);
                         }
                     }
                 }
@@ -80,9 +76,10 @@ namespace Donnatello
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine("Error with integer on line " + lineCount + " at space 2");
+                        string updater2 = "Error with integer on line " + lineCount + " at space 2";
+                        System.Windows.Forms.MessageBox.Show(updater2);
                     }
-                }       
+                }
             }
         }
     }

@@ -32,6 +32,8 @@ namespace Donnatello
             this.MultiLineTextParser = multi;
         }
 
+        /// <summary>Parses the specified input.</summary>
+        /// <param name="input">Parses strings</param>
         public void Parse(string input)
         {
             string variableName = "Test-num";
@@ -97,6 +99,18 @@ namespace Donnatello
                 varDictionary.TryGetValue(variableName, out result);
                 int updateValue = result + variableAssignment2;
                 varDictionary[variableName] = updateValue;
+
+                if (ifElseParser == null)
+                {
+                    ifElseParser = new ifElseParser(Canvas, TextParser, MultiLineTextParser);
+                    string send = updateValue.ToString();
+                    ifElseParser.ValueConverter(send);
+                }
+                else
+                {
+                    string send = updateValue.ToString();
+                    ifElseParser.ValueConverter(send);
+                }
             }
 
             if (MultiLineTextParser == null)
@@ -107,6 +121,26 @@ namespace Donnatello
             else
             {
                 MultiLineTextParser.ValueConverter(varDictionary);
+            }
+            if(MethodParser == null)
+            {
+                MethodParser = new MethodParser(Canvas, TextParser, MultiLineTextParser);
+                MethodParser.ValueConverter(varDictionary);
+            }
+            else
+            {
+                MethodParser.ValueConverter(varDictionary);
+            }
+            if (ifElseParser == null)
+            {
+                string send = result.ToString();
+                ifElseParser = new ifElseParser(Canvas, TextParser, MultiLineTextParser);
+                ifElseParser.ValueConverter(send);
+            }
+            else
+            {
+                string send = result.ToString();
+                ifElseParser.ValueConverter(send);
             }
 
             TextParser.ValueConverter(varDictionary);

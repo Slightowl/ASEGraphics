@@ -49,10 +49,14 @@ namespace Donnatello
 
                 if (input.Equals("run") == true)
                 {
-                    SyntaxChecker.SyntaxParse(commands);
                     multi.MultiParse(commands);
                     StatusBar.Text = "string";
                     
+                }
+                else if (input.Equals("syntax") == true)
+                {
+                    SyntaxChecker.SyntaxParse(commands);
+
                 }
                 else if (input.Equals("saveprogram") == true)
                 {
@@ -105,6 +109,14 @@ namespace Donnatello
                 CommandLine.Text = "";
                 Refresh();
             }
+        }
+
+        public void UpdateStatusText(string status, bool cursorWait = false)
+        {
+            System.Diagnostics.Debug.WriteLine(status);
+            
+
+            
         }
 
         /// <summary>Handles the Paint event of the PaintBox control.</summary>
