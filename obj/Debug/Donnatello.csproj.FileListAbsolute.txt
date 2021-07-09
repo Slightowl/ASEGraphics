@@ -17,7 +17,6 @@ C:\Users\sligh\Source\Repos\ASEGraphics\bin\Debug\Donnatello.exe
 C:\Users\sligh\Source\Repos\ASEGraphics\bin\Debug\Donnatello.pdb
 C:\Users\sligh\Source\Repos\ASEGraphics\obj\Debug\Donnatello.exe
 C:\Users\sligh\Source\Repos\ASEGraphics\obj\Debug\Donnatello.pdb
-C:\Users\sligh\Source\Repos\ASEGraphics\obj\Debug\Donnatello.csprojAssemblyReference.cache
 C:\Users\sligh\Source\Repos\ASEGraphics2\obj\Debug\Donnatello.csproj.AssemblyReference.cache
 C:\Users\sligh\Source\Repos\ASEGraphics2\obj\Debug\Donnatello.Donnatello.resources
 C:\Users\sligh\Source\Repos\ASEGraphics2\obj\Debug\Donnatello.Properties.Resources.resources

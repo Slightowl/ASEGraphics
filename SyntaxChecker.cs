@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Donnatello
 {
-    class SyntaxChecker
+    class SyntaxChecker : Donnatello
     {
 
         PaintBox Canvas;
@@ -64,7 +64,8 @@ namespace Donnatello
                         }
                         else
                         {
-                            System.Diagnostics.Debug.WriteLine("spelling error on line: " + lineCount + " at space 1"); 
+                            System.Diagnostics.Debug.WriteLine("spelling error on line: " + lineCount + " at space 1");
+                            //StatusBar.Text("spelling error on line: " + lineCount + " at space 1");
                         }
                     }
                 }
